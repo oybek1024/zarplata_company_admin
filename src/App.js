@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useEffect } from 'react'
+// import { PersistGate } from "redux-persist/integration/react";
+import { BrowserRouter } from 'react-router-dom'
+// import {useTranslation} from "react-i18next";
+// import {useSelector} from "react-redux";
+// import { persistor } from "services/Store";
+import Routes from './routes/routes'
+import Preloader from './components/preloader/preloader'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Suspense fallback={<Preloader />}>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </Suspense>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
