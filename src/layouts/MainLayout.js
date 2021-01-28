@@ -7,6 +7,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const { Header, Content, Sider } = Layout
 const { SubMenu } = Menu
@@ -24,10 +25,10 @@ export default function MainLayout({ children }) {
           <div className='logo' />
           <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
             <Menu.Item key='1' icon={<PieChartOutlined />}>
-              Option 1
+              <Link to='/'>Home</Link>
             </Menu.Item>
             <Menu.Item key='2' icon={<DesktopOutlined />}>
-              Option 2
+              <Link to='/contact'>Contact</Link>
             </Menu.Item>
             <SubMenu key='sub1' icon={<UserOutlined />} title='User'>
               <Menu.Item key='3'>Tom</Menu.Item>
@@ -45,9 +46,7 @@ export default function MainLayout({ children }) {
         </Sider>
         <Layout className='site-layout'>
           <Header className='site-layout-background' style={{ padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            {children}
-          </Content>
+          <Content style={{ margin: '0 16px' }}>{children}</Content>
         </Layout>
       </Layout>
     </div>

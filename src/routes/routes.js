@@ -22,13 +22,13 @@ const Routes = () => {
     {
       path: '/',
       exact: true,
-      layout: MainLayout,
+    //   layout: MainLayout,
       component: Home,
     },
     {
-      path: '/contact/:id',
+      path: '/contact',
       exact: true,
-      layout: MainLayout,
+    //   layout: MainLayout,
       component: Contact,
     },
   ]
@@ -48,7 +48,7 @@ const Routes = () => {
   return (
     <Switch>
       {publicRouteList}
-      {/* <Redirect from='*' to='/404' /> */}
+      <Redirect from='*' to='/404' />
     </Switch>
   )
 }
