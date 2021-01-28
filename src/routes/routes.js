@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { lazy } from 'react'
 
-const MainLayout = lazy(() => import('../layouts/MainLayout'))
+// const MainLayout = lazy(() => import('../layouts/MainLayout'))
 const Home = lazy(() => import('../pages/Home/Home'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
 
