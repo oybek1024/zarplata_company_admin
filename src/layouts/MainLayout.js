@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
+import RightContent from "../components/RightContent";
+import MenuHeader from "../components/MenuHeader";
+import basic from "../constants/basic";
+import '../assets/styles/layout.css'
 import {
   DesktopOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
@@ -18,12 +24,19 @@ export default function MainLayout({ children }) {
     <div className='App'>
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
+          className='slider'
           collapsible
+          theme={basic.MENU_THEME}
+          width={250}
           collapsed={collapsed}
           onCollapse={() => setCollapsed(!collapsed)}
         >
-          <div className='logo' />
-          <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
+          <MenuHeader collapsed={collapsed}/>
+          {/*<div className='logo'>*/}
+          {/*  <Avatar size={36} className='avatar' icon={<UserOutlined />} />*/}
+          {/*  { !collapsed ? <h1 className='title'>{ basic.TITLE }</h1> : '' }*/}
+          {/*</div>*/}
+          <Menu theme={basic.MENU_THEME} defaultSelectedKeys={['1']} mode='inline'>
             <Menu.Item key='1' icon={<PieChartOutlined />}>
               <Link to='/'>Home</Link>
             </Menu.Item>
@@ -45,7 +58,10 @@ export default function MainLayout({ children }) {
           </Menu>
         </Sider>
         <Layout className='site-layout'>
-          <Header className='site-layout-background' style={{ padding: 0 }} />
+          <Header className='site-layout-background header' style={{ padding: 0 }} >
+            { collapsed ? <MenuUnfoldOutlined onClick={() => { setCollapsed(!collapsed) }} className='menuIcon' /> : <MenuFoldOutlined onClick={() => { setCollapsed(!collapsed) }} className='menuIcon' /> }
+            <RightContent/>
+          </Header>
           <Content style={{ margin: '0 16px' }}>{children}</Content>
         </Layout>
       </Layout>
