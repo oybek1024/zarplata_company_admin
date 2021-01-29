@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
-import { lazy } from 'react'
-
-// const MainLayout = lazy(() => import('../layouts/MainLayout'))
-const Home = lazy(() => import('../pages/Home/Home'))
-const Contact = lazy(() => import('../pages/Contact/Contact'))
-
+import routes from "../constants/router";
 const AppRoute = ({component: Component, layout: Layout, ...rest}) => (
     <Route
         {...rest}
@@ -25,26 +20,8 @@ const Routes = () => {
        console.log("Before unmounting")
     }
   },[])
-
-
-  const publicRoutes = [
-    {
-      path: '/',
-      exact: true,
-    //   layout: MainLayout,
-      component: Home,
-    },
-    {
-      path: '/contact',
-      exact: true,
-    //   layout: MainLayout,
-      component: Contact,
-    },
-  ]
-
-
-
-  const publicRouteList = publicRoutes.map((item, id) => {
+  
+  const publicRouteList = routes.map((item, id) => {
     return (
       <AppRoute
         key={id}
