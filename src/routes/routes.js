@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import routes from "../constants/router";
+import guard from "../utils/permissions";
+const token = false
 const AppRoute = ({component: Component, layout: Layout, ...rest}) => (
     <Route
         {...rest}
@@ -14,20 +16,21 @@ const AppRoute = ({component: Component, layout: Layout, ...rest}) => (
 
 
 const Routes = () => {
-  useEffect(() => {
-     console.log('Ready')
-    return () => {
-       console.log("Before unmounting")
-    }
-  },[])
+  // useEffect(() => {
+  //    console.log('Ready')
+  //   return () => {
+  //      console.log("Before unmounting")
+  //   }
+  // },[])
   
-  const publicRouteList = routes.map((item, id) => {
+  const publicRouteList = routes
+      .filter(e => guard(e.meta.title) && (token ? e.meta.isAuthorited : !e.meta.isAuthorited))
+      .map((item, id) => {
     return (
       <AppRoute
         key={id}
         exact
         path={item.path}
-        layout={item.layout}
         component={item.component}
       />
     )
@@ -36,7 +39,9 @@ const Routes = () => {
   return (
     <Switch>
       {publicRouteList}
-      <Redirect from='*' to='/404' />
+        {
+            token ? (<Redirect from='*' to='/404' />) : (<Redirect from='*' to='/login' />)
+        }
     </Switch>
   )
 }

@@ -1,4 +1,4 @@
-const permissions = ['home', 'contact']
+const permissions = ['home', 'contact', 'login']
 
 function guard (route) {
     let _isHave = false

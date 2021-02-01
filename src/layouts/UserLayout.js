@@ -1,6 +1,6 @@
-function UserLayout () {
+function UserLayout ({ children }) {
     return (
-        <div>User Layout</div>
+        <div>{children}</div>
     )
 }
 
