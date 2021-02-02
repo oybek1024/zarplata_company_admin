@@ -1,6 +1,6 @@
 import { lazy } from "react";
-
-const Home = lazy(() => import('../pages/Home/Home'))
+import Home from '../pages/Home/Home'
+// const Home = lazy(() => import('../pages/Home/Home'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
 const Login = lazy(() => import('../pages/Login/Login'))
 const NotFound = lazy(() => import('../pages/statuses/404'))

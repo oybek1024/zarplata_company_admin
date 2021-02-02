@@ -10,9 +10,10 @@ function RightContent (props) {
     const history = useHistory()
 
     const Logout = function() {
+        // debugger
         localStorage.removeItem('user')
-        document.location.reload()
         history.push('/login')
+        document.location.reload()
     }
     const menu = (
         <Menu>

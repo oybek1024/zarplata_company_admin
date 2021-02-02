@@ -4,19 +4,22 @@ import { useDispatch } from 'react-redux'
 // import axios_init from "../../utils/axios_init";
 import { isLoadingOverlay } from '../../services/actions'
 import './login.css'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { requests } from '../../services/requests'
 
 function Login() {
   const dispatch = useDispatch()
   const history = useHistory()
+  const location = useLocation()
   const [login, loginInfo] = useMutation(requests.auth.login, {
     onSuccess: (res) => {
-      history.push('/')
       dispatch(isLoadingOverlay(false))
       localStorage.setItem('user', JSON.stringify(res))
-      // document.location.reload()
+      document.location.reload()
+      history.push('/')
+      console.log(history)
+      console.log('location', location)
     },
     onError: () => {
       console.log('error')

@@ -26,22 +26,28 @@ const Routes = () => {
   // },[])
 
   const publicRouteList = routes
-    .filter(
-      (e) =>
-        guard(e.meta.title) &&
-        (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
-    )
+    // .filter(
+    //   (e) =>
+    //     guard(e.meta.title) &&
+    //     (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
+    // )
     .map((item, id) => {
       return (
         <AppRoute key={id} exact path={item.path} component={item.component} />
       )
     })
+    console.log(routes
+        .filter(
+            (e) =>
+                guard(e.meta.title) &&
+                (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
+        ))
 
   return (
     <Switch>
       {publicRouteList}
       {token ? (
-        <Redirect from='*' to='/404' />
+          <Redirect from='*' to='/404' />
       ) : (
         <Redirect from='*' to='/login' />
       )}
