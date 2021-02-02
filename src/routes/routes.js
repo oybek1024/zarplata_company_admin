@@ -2,7 +2,10 @@ import React from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import routes from "../constants/router";
 import guard from "../utils/permissions";
-const token = false
+
+
+
+const token = JSON.parse(localStorage.getItem('user')) && JSON.parse(localStorage.getItem('user'))['access_token']
 const AppRoute = ({component: Component, layout: Layout, ...rest}) => (
     <Route
         {...rest}

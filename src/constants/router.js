@@ -3,6 +3,7 @@ import { lazy } from "react";
 const Home = lazy(() => import('../pages/Home/Home'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
 const Login = lazy(() => import('../pages/Login/Login'))
+const NotFound = lazy(() => import('../pages/statuses/404'))
 const routes = [
     {
         path: '/',
@@ -26,6 +27,15 @@ const routes = [
         exact: true,
         component: Login,
         meta: { title: 'login', isAuthorited: false },
+        children: []
+    },
+    {
+        path: '/404',
+        name: '404',
+        exact: true,
+        component: NotFound,
+        hidden: true,
+        meta: { title: '404', isAuthorited: true },
         children: []
     }
 ]

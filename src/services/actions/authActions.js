@@ -3,6 +3,7 @@ import {
   REFRESH_ACCESS_TOKEN,
   SET_AUTH_TOKENS,
   SET_AUTH_CREDENTIALS,
+  IS_LOADING
 } from '../constants'
 
 export const setAuthTokens = (data) => ({
@@ -16,6 +17,11 @@ export const setAuthTokens = (data) => ({
 export const refreshAccessToken = (token) => ({
   type: REFRESH_ACCESS_TOKEN,
   payload: token,
+})
+
+export const isLoadingOverlay = (val) => ({
+  type: IS_LOADING,
+  payload: val,
 })
 
 export const logout = () => ({

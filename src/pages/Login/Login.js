@@ -1,14 +1,21 @@
 import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useDispatch } from "react-redux";
 // import axios_init from "../../utils/axios_init";
+import { isLoadingOverlay } from "../../services/actions";
 import './login.css'
+import { useHistory } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { requests } from '../../services/requests'
 
 function Login() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [login, loginInfo] = useMutation(requests.auth.login, {
-    onSuccess: ({ data }) => {
-      console.log(data)
+    onSuccess: (res) => {
+      localStorage.setItem('user', JSON.stringify(res))
+      document.location.reload()
+      history.push('/contact')
     },
     onError: () => console.log('error'),
   })
@@ -16,8 +23,10 @@ function Login() {
   console.log('loginInfo => ', loginInfo)
 
   const onFinish = (values) => {
-    // axios_init.post('/authenticate', values).then((res) => console.log(res))
-    login(values)
+    dispatch(isLoadingOverlay(loginInfo.isLoading))
+    login(values).finally(() => {
+      dispatch(isLoadingOverlay(loginInfo.isLoading))
+    })
   }
   return (
     <div className='login'>

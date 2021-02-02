@@ -4,6 +4,8 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
+import { store } from "./services/store";
+import {Provider} from "react-redux";
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -17,7 +19,9 @@ const queryCache = new QueryCache({
 
 ReactDOM.render(
   <ReactQueryCacheProvider queryCache={queryCache}>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ReactQueryCacheProvider>,
   document.getElementById('root')
 )

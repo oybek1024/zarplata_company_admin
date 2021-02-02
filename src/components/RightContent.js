@@ -3,21 +3,27 @@ import { UserOutlined, LogoutOutlined, BellOutlined } from "@ant-design/icons"
 import { Menu, Dropdown, Badge } from 'antd'
 import './styles/style.css'
 import basic from "../constants/basic";
-
-const menu = (
-    <Menu>
-        <Menu.Item>
-            <UserOutlined /> Profile
-        </Menu.Item>
-        <Menu.Item>
-            <LogoutOutlined />  Log out
-        </Menu.Item>
-    </Menu>
-);
-
+import { useHistory } from 'react-router-dom'
 
 
 function RightContent (props) {
+    const history = useHistory()
+
+    const Logout = function() {
+        localStorage.removeItem('user')
+        document.location.reload()
+        history.push('/login')
+    }
+    const menu = (
+        <Menu>
+            <Menu.Item>
+                <UserOutlined /> Profile
+            </Menu.Item>
+            <Menu.Item onClick={ () => { Logout() } }>
+                <LogoutOutlined />  Log out
+            </Menu.Item>
+        </Menu>
+    )
     return (
         <div style={{ display: "flex", alignItems: 'center' }}>
             <Badge style={{ marginRight: '10px', cursor: 'pointer' }} count={5}>

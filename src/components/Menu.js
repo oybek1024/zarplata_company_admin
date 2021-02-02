@@ -11,7 +11,7 @@ function MainMenu(props) {
     return (
         <Menu theme={basic.MENU_THEME} defaultSelectedKeys={['1']} mode='inline'>
             { routes
-                .filter(e => guard(e.meta.title) && e.meta.isAuthorited)
+                .filter(e => guard(e.meta.title) && e.meta.isAuthorited && !e.hidden)
                 .map((e, i) => (
                 <Menu.Item key={i + 1} icon={IconFinder(e.meta.icon)}>
                     <Link to={e.path}>{e.name}</Link>
