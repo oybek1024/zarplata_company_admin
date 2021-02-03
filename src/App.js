@@ -12,11 +12,7 @@ import MainLayout from './layouts/MainLayout'
 import Login from './pages/Login/Login'
 
 function App() {
-  //   const token =
-  //     JSON.parse(localStorage.getItem('user')) &&
-  //     JSON.parse(localStorage.getItem('user'))['access_token']
   const isLoad = useSelector((state) => state.auth.isLoading)
-  console.log('loading => ', isLoad)
   return (
     <PersistGate loading={null} persistor={persistor}>
       <div className='App'>
@@ -24,9 +20,11 @@ function App() {
           {isLoad ? <Loader /> : undefined}
           <BrowserRouter>
             <Route path='/login' exact component={Login} />
-            <MainLayout>
-              <Routes />
-            </MainLayout>
+            <Route path='/admin/:path?' exact>
+              <MainLayout>
+                <Routes />
+              </MainLayout>
+            </Route>
           </BrowserRouter>
         </Suspense>
       </div>

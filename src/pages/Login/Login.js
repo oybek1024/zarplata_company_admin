@@ -1,3 +1,4 @@
+import React from 'react'
 import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
@@ -16,8 +17,7 @@ function Login() {
     onSuccess: (res) => {
       dispatch(isLoadingOverlay(false))
       localStorage.setItem('user', JSON.stringify(res))
-      document.location.reload()
-      history.push('/')
+      history.push('/admin')
       console.log(history)
       console.log('location', location)
     },

@@ -36,18 +36,19 @@ const Routes = () => {
         <AppRoute key={id} exact path={item.path} component={item.component} />
       )
     })
-    console.log(routes
-        .filter(
-            (e) =>
-                guard(e.meta.title) &&
-                (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
-        ))
+  console.log(
+    routes.filter(
+      (e) =>
+        guard(e.meta.title) &&
+        (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
+    )
+  )
 
   return (
     <Switch>
       {publicRouteList}
       {token ? (
-          <Redirect from='*' to='/404' />
+        <Redirect from='*' to='/admin/404' />
       ) : (
         <Redirect from='*' to='/login' />
       )}
