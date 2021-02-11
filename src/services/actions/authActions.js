@@ -9,8 +9,8 @@ import {
 export const setAuthTokens = (data) => ({
   type: SET_AUTH_TOKENS,
   payload: {
-    accessToken: data && data.access,
-    refreshToken: data && data.refresh,
+    accessToken: data && data.access_token,
+    refreshToken: data && data.refresh_token,
   },
 })
 

@@ -20,11 +20,9 @@ function App() {
           {isLoad ? <Loader /> : undefined}
           <BrowserRouter>
             <Route path='/login' exact component={Login} />
-            <Route path='/admin/:path?' exact>
-              <MainLayout>
-                <Routes />
-              </MainLayout>
-            </Route>
+            <MainLayout>
+              <Routes />
+            </MainLayout>
           </BrowserRouter>
         </Suspense>
       </div>

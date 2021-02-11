@@ -6,13 +6,16 @@ import MainMenu from '../components/Menu'
 import basic from '../constants/basic'
 import '../assets/styles/layout.css'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
 
 const { Header, Content, Sider } = Layout
 
 export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
+  const isAuthorited = useSelector((state) => state.auth.accessToken)
+
   return (
-    <div className='App'>
+    <div className={`App ${isAuthorited ? '' : 'd-none'}`}>
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
           className='slider'

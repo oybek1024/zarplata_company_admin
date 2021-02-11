@@ -3,23 +3,21 @@ import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 // import axios_init from "../../utils/axios_init";
-import { isLoadingOverlay } from '../../services/actions'
+import { isLoadingOverlay, setAuthTokens } from '../../services/actions'
 import './login.css'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { requests } from '../../services/requests'
 
 function Login() {
   const dispatch = useDispatch()
   const history = useHistory()
-  const location = useLocation()
+
   const [login, loginInfo] = useMutation(requests.auth.login, {
     onSuccess: (res) => {
       dispatch(isLoadingOverlay(false))
-      localStorage.setItem('user', JSON.stringify(res))
-      history.push('/admin')
-      console.log(history)
-      console.log('location', location)
+      dispatch(setAuthTokens(res))
+      history.push('/')
     },
     onError: () => {
       console.log('error')
