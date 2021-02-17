@@ -50,7 +50,7 @@ export default function MainLayout({ children }) {
             )}
             <RightContent />
           </Header>
-          <Content style={{ margin: '0 16px' }}>{children}</Content>
+          <Content style={{ margin: '0 16px' }} className="mainBox">{children}</Content>
         </Layout>
       </Layout>
     </div>

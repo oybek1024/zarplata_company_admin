@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import routes from '../constants/router'
 import guard from '../utils/permissions'
+import nprogress from 'nprogress'
 import { useSelector } from 'react-redux'
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
@@ -36,6 +37,13 @@ const Routes = () => {
         (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
     )
   )
+  React.useState(nprogress.start());
+
+  React.useEffect(() => {
+    nprogress.done();
+    return () => nprogress.start();
+  });
+
 
   return (
     <Switch>

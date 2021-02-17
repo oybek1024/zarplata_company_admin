@@ -10,9 +10,11 @@ import Routes from './routes/routes'
 // import Preloader from './components/preloader/preloader'
 import MainLayout from './layouts/MainLayout'
 import Login from './pages/Login/Login'
+import 'nprogress/nprogress.css'
 
 function App() {
   const isLoad = useSelector((state) => state.auth.isLoading)
+  // Nprogress.start()
   return (
     <PersistGate loading={null} persistor={persistor}>
       <div className='App'>

@@ -38,3 +38,13 @@
     align-items: center;
     justify-content: space-between;
 }
+.mainBox {
+    padding: 24px;
+    margin: 0 !important;
+}
+.mainBox .ant-card-bordered {
+    border: none !important;
+}
+.mainBox .ant-card {
+    border-radius: 2px !important;
+}

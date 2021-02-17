@@ -6,3 +6,4 @@ export const CLEAR_ON_SIGNOUT = `CLEAR_ON_SIGNOUT`
 export const CHANGE_LANGUAGE = `CHANGE_LANGUAGE`
 
 export const IS_LOADING = 'IS_LOADING'
+export const MENU_KEY = 'MENU_KEY'
