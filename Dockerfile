@@ -1,26 +1,25 @@
-CURRENT_DIR=$(shell pwd)
+FROM node:10.16.3 as builder
+RUN apt update && apt-get install -y yarn
 
-APP=$(shell basename ${CURRENT_DIR})
+RUN mkdir app
+WORKDIR app
 
-APP_CMD_DIR=${CURRENT_DIR}/cmd
 
-IMG_NAME=${APP}
-REGISTRY=${REGISTRY}
+COPY package*.json ./
+RUN yarn install
 
-TAG=latest
-ENV_TAG=latest
-# Including
-include .build_info
+COPY . ./
+RUN yarn install
+RUN yarn build
 
-build-image:
-	docker build --rm -t ${REGISTRY}/${PROJECT_NAME}/${APP}/${IMG_NAME}:${TAG} .
-	docker tag ${REGISTRY}/${PROJECT_NAME}/${APP}/${IMG_NAME}:${TAG} ${REGISTRY}/${PROJECT_NAME}/${APP}/${IMG_NAME}:${ENV_TAG}
 
-push-image:
-	docker push ${REGISTRY}/${PROJECT_NAME}/${APP}/${IMG_NAME}:${TAG}
-	docker push ${REGISTRY}/${PROJECT_NAME}/${APP}/${IMG_NAME}:${ENV_TAG}
+FROM node:10.16.3-alpine
+RUN mkdir app
+WORKDIR app
 
-swag_init:
-	swag init -g api/main.go -o api/docs
+COPY --from=builder /app/ /app/
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
 
-.PHONY: build-image
+EXPOSE 3000
+ENTRYPOINT ["npm", "start"]

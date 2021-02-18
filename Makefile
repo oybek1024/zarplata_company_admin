@@ -32,14 +32,6 @@ clear:
 network:
 	docker network create --driver=bridge ${NETWORK_NAME}
 
-migrate-up:
-	docker run --mount type=bind,source="${CURRENT_DIR}/migrations,target=/migrations" --network ${NETWORK_NAME} migrate/migrate \
-		-path=/migrations/ -database=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable up
-
-migrate-down:
-	docker run --mount type=bind,source="${CURRENT_DIR}/migrations,target=/migrations" --network ${NETWORK_NAME} migrate/migrate \
-		-path=/migrations/ -database=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable down
-
 mark-as-production-image:
 	docker tag ${REGISTRY}/${APP}:${TAG} ${REGISTRY}/${APP}:production
 	docker push ${REGISTRY}/${APP}:production
