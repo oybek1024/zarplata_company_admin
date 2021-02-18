@@ -34,14 +34,14 @@ function Login() {
   return (
     <div className='login'>
       <div className='logo_content'>
-        <img
-          className='logo_image'
-          alt={'Logo'}
-          src={
-            'https://www.designbust.com/download/625/png/instagram_logo_transparent512.png'
-          }
-        />
-        <h1>Instagram</h1>
+        {/*<img*/}
+        {/*  className='logo_image'*/}
+        {/*  alt={'Logo'}*/}
+        {/*  src={*/}
+        {/*    'https://www.designbust.com/download/625/png/instagram_logo_transparent512.png'*/}
+        {/*  }*/}
+        {/*/>*/}
+        <h1>muno</h1>
       </div>
       <div className='login_content'>
         <Form

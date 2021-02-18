@@ -5,8 +5,8 @@ import {
 
 function IconFinder (icon) {
     switch (icon) {
-        case 'DesktopOutlined': return <DesktopOutlined />
-        case 'PieChartOutlined': return <PieChartOutlined />
+        case 'DesktopOutlined': return ( <DesktopOutlined /> )
+        case 'PieChartOutlined': return ( <PieChartOutlined /> )
         default: break
     }
 }
