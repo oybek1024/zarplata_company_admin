@@ -2,6 +2,7 @@ const path = require('path')
 const hwp = require('html-webpack-plugin')
 // const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
+const port = 7077
 module.exports = {
     mode: 'development',
     entry: { index: path.resolve(__dirname, "src", "index.js") },
@@ -21,9 +22,8 @@ module.exports = {
         'react-router-dom': 'ReactRouterDOM'
     },
     devServer: {
-        allowedHosts: [
-            '*'
-        ],
+        port: port,
+        host: '0.0.0.0',
         disableHostCheck: true,
         historyApiFallback: true
     },
