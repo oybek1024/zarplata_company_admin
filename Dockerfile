@@ -6,20 +6,13 @@ WORKDIR app
 
 
 COPY package*.json ./
-RUN npm install
 
 COPY . ./
 RUN npm install
-RUN npm build
+RUN npm run-script build
 
 
-FROM node:10.16.3-alpine
-RUN mkdir app
-WORKDIR app
-
-COPY --from=builder /app/ /app/
 ENV NODE_ENV=production
-ENV HOST=0.0.0.0
+ENV REACT_APP_HOST=0.0.0.0
 
-EXPOSE 3000
 ENTRYPOINT ["npm", "start"]
