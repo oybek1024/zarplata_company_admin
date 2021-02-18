@@ -2,7 +2,7 @@ const path = require('path')
 const hwp = require('html-webpack-plugin')
 // const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
-const port = process.env.REACT_APP_PORT || 7077
+const port = 7077
 module.exports = {
     mode: 'development',
     entry: { index: path.resolve(__dirname, "src", "index.js") },
@@ -23,6 +23,7 @@ module.exports = {
     },
     devServer: {
         port: port,
+        host: '0.0.0.0',
         disableHostCheck: true,
         historyApiFallback: true
     },

@@ -1,5 +1,4 @@
-import axios from "axios";
-import basic from "../constants/basic"
+import axios from "axios"
 import { notification } from 'antd'
 
 const token = false
