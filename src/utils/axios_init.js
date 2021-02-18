@@ -38,7 +38,7 @@ function ErrorHandler (error) {
 const init = {
     request (method, url, params, data) {
         let config  = {
-            baseURL: basic.BASE_URL,
+            baseURL: process.env.REACT_APP_BASE_URL,
             timeout: 10000,
             url: url,
             method: method

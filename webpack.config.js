@@ -1,7 +1,8 @@
 const path = require('path')
 const hwp = require('html-webpack-plugin')
-const webpack = require('webpack')
-const port = process.env.REACT_APP_PORT
+// const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack');
+const port = process.env.REACT_APP_PORT || 7077
 module.exports = {
     mode: 'development',
     entry: { index: path.resolve(__dirname, "src", "index.js") },
@@ -74,8 +75,11 @@ module.exports = {
                 favicon: 'public/favicon.jpg'
             }
         ),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-        }),
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         'REACT_APP_PORT': JSON.stringify(process.env.REACT_APP_PORT)
+        //     }
+        // }),
+        new Dotenv()
     ]
 }

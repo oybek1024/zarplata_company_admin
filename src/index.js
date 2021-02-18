@@ -5,7 +5,6 @@ import App from './App'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import { store } from "./services/store";
 import {Provider} from "react-redux";
-
 const queryCache = new QueryCache({
   defaultConfig: {
     queries: {
