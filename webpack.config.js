@@ -1,9 +1,9 @@
 const path = require('path')
 const hwp = require('html-webpack-plugin')
 const webpack = require('webpack')
-// const port = process.env.REACT_APP_PORT || 3000
+const port = process.env.REACT_APP_PORT
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: { index: path.resolve(__dirname, "src", "index.js") },
     resolve: {
         alias: {
@@ -21,8 +21,8 @@ module.exports = {
         'react-router-dom': 'ReactRouterDOM'
     },
     devServer: {
-        port: 7077,
-        host: '0.0.0.0',
+        port: port,
+        disableHostCheck: true,
         historyApiFallback: true
     },
     module: {
@@ -75,9 +75,7 @@ module.exports = {
             }
         ),
         new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("production")
-            }
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),
     ]
 }
