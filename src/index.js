@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import './index.less'
 import App from './App'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import { store } from "./services/store";

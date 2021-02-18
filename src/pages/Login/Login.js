@@ -1,18 +1,18 @@
-import React from 'react'
-import { Form, Input, Button } from 'antd'
+import React, { useState } from 'react'
+import { Form, Input, Button, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 // import axios_init from "../../utils/axios_init";
-import { isLoadingOverlay, setAuthTokens } from '../../services/actions'
-import './login.css'
+import { isLoadingOverlay, setAuthTokens } from '@/services/actions'
+import './login.less'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from 'react-query'
-import { requests } from '../../services/requests'
-
+import { requests } from '@/services/requests'
+import logo from '@/assets/images/muno.svg'
 function Login() {
   const dispatch = useDispatch()
   const history = useHistory()
-
+  const [notfound, setNotFound] = useState(false)
   const [login, loginInfo] = useMutation(requests.auth.login, {
     onSuccess: (res) => {
       dispatch(isLoadingOverlay(false))
@@ -21,6 +21,7 @@ function Login() {
     },
     onError: () => {
       console.log('error')
+      setNotFound(true)
       dispatch(isLoadingOverlay(false))
     },
   })
@@ -34,16 +35,15 @@ function Login() {
   return (
     <div className='login'>
       <div className='logo_content'>
-        {/*<img*/}
-        {/*  className='logo_image'*/}
-        {/*  alt={'Logo'}*/}
-        {/*  src={*/}
-        {/*    'https://www.designbust.com/download/625/png/instagram_logo_transparent512.png'*/}
-        {/*  }*/}
-        {/*/>*/}
-        <h1>muno</h1>
+        <img
+          className='logo_image'
+          alt={'Logo'}
+          src={logo}
+        />
       </div>
       <div className='login_content'>
+        <h1>Войти в систему</h1>
+        { notfound ? (<Alert style={{ marginBottom: '20px' }} message="Логин или пароль неверный !" type="error" />) : undefined }
         <Form
           name='normal_login'
           className='login-form'
@@ -51,12 +51,13 @@ function Login() {
           onFinish={onFinish}
         >
           <Form.Item
-            name='username'
+            name='login'
             rules={[{ required: true, message: 'Please input your Username!' }]}
           >
             <Input
+              size="large"
               prefix={<UserOutlined className='site-form-item-icon' />}
-              placeholder='Username'
+              placeholder='Введите логин'
             />
           </Form.Item>
           <Form.Item
@@ -64,28 +65,21 @@ function Login() {
             rules={[{ required: true, message: 'Please input your Password!' }]}
           >
             <Input
+              size="large"
               prefix={<LockOutlined className='site-form-item-icon' />}
               type='password'
-              placeholder='Password'
+              placeholder='Введите пароль'
             />
           </Form.Item>
-          {/*<Form.Item>*/}
-          {/*    <Form.Item name="remember" valuePropName="checked" noStyle>*/}
-          {/*        <Checkbox>Remember me</Checkbox>*/}
-          {/*    </Form.Item>*/}
-
-          {/*    <a className="login-form-forgot" href="">*/}
-          {/*        Forgot password*/}
-          {/*    </a>*/}
-          {/*</Form.Item>*/}
 
           <Form.Item>
             <Button
               type='primary'
               htmlType='submit'
               className='login-form-button'
+              size='large'
             >
-              Log in
+              Войти в систему
             </Button>
             {/*Or <a href="">register now!</a>*/}
           </Form.Item>

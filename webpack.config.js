@@ -1,9 +1,15 @@
 const path = require('path')
 const hwp = require('html-webpack-plugin')
-
+const webpack = require('webpack')
+// const port = process.env.REACT_APP_PORT || 3000
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: { index: path.resolve(__dirname, "src", "index.js") },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src/'),
+        }
+    },
     output: {
         path: path.join(__dirname, '/dist'),
         filename: '[name].[hash].js',
@@ -46,7 +52,13 @@ module.exports = {
                         loader: "less-loader",
                         options: {
                             lessOptions: {
-                                strictMath: true,
+                                modifyVars: {
+                                    'primary-color': '#0E0D23',
+                                    'link-color': '#1890ff',
+                                    'border-radius-base': '3px',
+                                    'border-color-base': '#bab4b4'
+                                },
+                                javascriptEnabled: true
                             }
                         }
                     }
@@ -60,6 +72,11 @@ module.exports = {
                 template: 'public/index.html',
                 favicon: 'public/favicon.jpg'
             }
-        )
+        ),
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
     ]
 }

@@ -1,7 +1,7 @@
 import { Avatar } from 'antd'
 import { UserOutlined, LogoutOutlined, BellOutlined } from '@ant-design/icons'
 import { Menu, Dropdown, Badge } from 'antd'
-import './styles/style.css'
+import './styles/style.less'
 import basic from '../constants/basic'
 import { logout } from '../services/actions'
 import { useDispatch } from 'react-redux'

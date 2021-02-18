@@ -1,15 +1,16 @@
-import basic from "../constants/basic";
-import IconFinder from "../constants/icons";
+import basic from "@/constants/basic";
+import IconFinder from "@/constants/icons";
 import {Menu} from 'antd'
-import routes from "../constants/router";
+import routes from "@/constants/router";
 import {useSelector} from 'react-redux'
-import guard from "../utils/permissions";
+import guard from "@/utils/permissions";
+import './menu.less'
 // const { SubMenu } = Menu
-import {setMenuKey} from "../services/actions";
+import {setMenuKey} from "../../services/actions";
 import {Link, useLocation} from "react-router-dom";
 import React, {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import MenuKey from "../utils/menuKey";
+import MenuKey from "../../utils/menuKey";
 
 function MainMenu(props) {
     const dispatch = useDispatch()
