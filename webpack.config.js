@@ -21,7 +21,8 @@ module.exports = {
         'react-router-dom': 'ReactRouterDOM'
     },
     devServer: {
-        port: 7077,
+        // port: 7077,
+        host: '0.0.0.0',
         historyApiFallback: true
     },
     module: {
