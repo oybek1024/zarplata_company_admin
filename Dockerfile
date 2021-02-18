@@ -1,4 +1,4 @@
-FROM node:10.16.3 as builder
+FROM node:latest as builder
 RUN apt update && apt-get install -y yarn
 
 RUN mkdir app
