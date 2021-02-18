@@ -25,8 +25,8 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode development"
+    "start": "webpack serve --mode development --host 0.0.0.0 --port 7077",
+    "build": "webpack --config webpack.config.js"
   },
   "eslintConfig": {
     "extends": [
