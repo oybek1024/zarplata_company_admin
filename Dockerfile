@@ -6,11 +6,11 @@ WORKDIR app
 
 
 COPY package*.json ./
-RUN yarn install
+RUN npm install
 
 COPY . ./
-RUN yarn install
-RUN yarn build
+RUN npm install
+RUN npm build
 
 
 FROM node:10.16.3-alpine
