@@ -1,8 +1,9 @@
 import { lazy } from 'react'
-const Home = lazy(() => import('../pages/Home/Home'))
-const Contact = lazy(() => import('../pages/Contact/Contact'))
-const NotFound = lazy(() => import('../pages/statuses/404'))
-
+const Home = lazy(() => import('@/pages/Home/Home'))
+const Contact = lazy(() => import('@/pages/Contact/Contact'))
+const NotFound = lazy(() => import('@/pages/statuses/404'))
+const Celebrity = lazy(() => import('@/pages/Celebrity/Celebrity'))
+const Clients = lazy(() => import('@/pages/Clients/Clients'))
 const routes = [
   {
     path: '/',
@@ -18,6 +19,22 @@ const routes = [
     exact: true,
     component: Contact,
     meta: { title: 'contact', icon: 'DesktopOutlined', isAuthorited: true },
+    children: [],
+  },
+  {
+    path: '/celebrity',
+    name: 'celebrity',
+    exact: true,
+    component: Celebrity,
+    meta: { title: 'celebrity', icon: 'UserOutlined', isAuthorited: true },
+    children: [],
+  },
+  {
+    path: '/clients',
+    name: 'clients',
+    exact: true,
+    component: Clients,
+    meta: { title: 'clients', icon: 'UserOutlined', isAuthorited: true },
     children: [],
   },
   {

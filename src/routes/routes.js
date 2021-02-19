@@ -1,9 +1,12 @@
-import React from 'react'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Redirect, Route, Switch, withRouter, useLocation } from 'react-router-dom'
 import routes from '../constants/router'
 import guard from '../utils/permissions'
 import nprogress from 'nprogress'
 import { useSelector } from 'react-redux'
+import MenuKey from "@/utils/menuKey"
+import { setMenuKey } from "@/services/actions";
+import { useDispatch } from "react-redux";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -30,20 +33,16 @@ const Routes = () => {
         <AppRoute key={id} exact path={item.path} component={item.component} />
       )
     })
-  console.log(
-    routes.filter(
-      (e) =>
-        guard(e.meta.title) &&
-        (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
-    )
-  )
-  React.useState(nprogress.start());
 
-  React.useEffect(() => {
+
+  React.useState(nprogress.start());
+  const dispatch = useDispatch()
+  const location = useLocation()
+  useEffect(() => {
+    dispatch(setMenuKey(MenuKey(location.pathname)))
     nprogress.done();
     return () => nprogress.start();
-  });
-
+  })
 
   return (
     <Switch>
