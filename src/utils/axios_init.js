@@ -1,7 +1,7 @@
 import axios from "axios"
 import { notification } from 'antd'
 
-const token = false
+const token = localStorage.getItem('token')
 
 function alert (title, des) {
     notification.error({
@@ -13,7 +13,7 @@ function alert (title, des) {
 function ErrorHandler (error) {
     console.log(error)
     if (error.message.startsWith('timeout')) {
-        console.log('TimeOut')
+        alert('Time Out', 'Please check your internet!')
     }
     if (error.response) {
         let _error = error.response
@@ -38,7 +38,7 @@ const init = {
     request (method, url, params, data) {
         let config  = {
             baseURL: process.env.REACT_APP_BASE_URL,
-            timeout: 10000,
+            timeout: 30000,
             url: url,
             method: method
         }

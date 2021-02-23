@@ -7,13 +7,18 @@ import basic from '@/constants/basic'
 import '@/assets/styles/layout.less'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-
 const { Header, Content, Sider } = Layout
-
+const token = localStorage.getItem('token')
 export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
   const isAuthorited = useSelector((state) => state.auth.accessToken)
-
+  const websocket = new WebSocket(`ws://websocket.muno.uz/ws?Authorization=${token}`)
+  websocket.onopen = () => {
+    console.log('Muno socket connecting.....')
+  }
+  websocket.onmessage = (e) => {
+    console.log('WebSocket message received: ', e)
+  }
   return (
     <div className={`App ${isAuthorited ? '' : 'd-none'}`}>
       <Layout style={{ minHeight: '100vh' }}>

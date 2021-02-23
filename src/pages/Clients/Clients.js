@@ -5,7 +5,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import axios_init from "@/utils/axios_init";
 // import { useQuery } from 'react-query'
 import { useDispatch } from 'react-redux'
-import { isLoadingOverlay } from "@/services/actions";
+import { isLoadingOverlay } from "@/redux/actions";
 export default function Contact() {
     const dispatch = useDispatch()
     const [items, setItems] = React.useState([])

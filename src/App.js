@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter, Route } from 'react-router-dom'
-// import { store } from './services/store'
+// import { store } from './redux/store'
 // import {useTranslation} from "react-i18next";
 import { useSelector } from 'react-redux'
-import { persistor } from './services/store'
+import { persistor } from './redux/store'
 import Loader from './components/Loader'
 import Routes from './routes/routes'
 // import Preloader from './components/preloader/preloader'

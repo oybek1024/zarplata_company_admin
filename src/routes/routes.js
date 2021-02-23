@@ -5,7 +5,7 @@ import guard from '../utils/permissions'
 import nprogress from 'nprogress'
 import { useSelector } from 'react-redux'
 import MenuKey from "@/utils/menuKey"
-import { setMenuKey } from "@/services/actions";
+import { setMenuKey } from "@/redux/actions";
 import { useDispatch } from "react-redux";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
