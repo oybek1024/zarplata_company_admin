@@ -1,14 +1,9 @@
 import React from 'react'
 import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
-import {Table, Space, Tag, Card, Button} from 'antd'
-import { PlusOutlined } from "@ant-design/icons";
-import axios_init from "@/utils/axios_init";
-// import { useQuery } from 'react-query'
-import { useDispatch } from 'react-redux'
-import { isLoadingOverlay } from "@/redux/actions";
+import {Button, Card, Table} from "antd";
+import {PlusOutlined} from "@ant-design/icons";
+
 export default function Contact() {
-    const dispatch = useDispatch()
-    const [items, setItems] = React.useState([])
     const routes = [
         {
             name: 'Home',
@@ -16,8 +11,8 @@ export default function Contact() {
             link: true
         },
         {
-            name: 'Clients',
-            route: '/clients',
+            name: 'Celebrity',
+            route: '/celebrity',
             link: false
         }
     ]
@@ -55,18 +50,17 @@ export default function Contact() {
                 <a>Delete</a>
             )
         }
-    ];
-    const getData = function () {
-        dispatch(isLoadingOverlay(true))
-        axios_init.get('/client').then(res => {
-            setItems(res.clients)
-        }).finally(() => {
-            dispatch(isLoadingOverlay(false))
-        })
-    }
-    React.useEffect(() => {
-        getData()
-    }, [])
+    ]
+    const items = [
+        {
+            id: 'xxsadw1',
+            first_name: 'Oybek',
+            last_name: 'Mukhiddinov',
+            phone_number: '+998996062053',
+            email: 'mukhiddinov.oybek1024@gmail.com',
+            bio: 'Front End and Backend'
+        }
+    ]
     const ExtraButton = function () {
         return (
             <Button type="primary" icon={<PlusOutlined />}>
@@ -74,10 +68,11 @@ export default function Contact() {
             </Button>
         )
     }
+
     return (
         <div>
             <BreadCrumbTemplete routes={routes}/>
-            <Card title="Clients">
+            <Card title="Celebrity" extra={<ExtraButton/>}>
                 <Table columns={columns} dataSource={items} rowKey={ (record) => record.id } scroll={{ x: 100 }}/>
             </Card>
         </div>
