@@ -1,22 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import {Redirect, Route, Switch, withRouter, useLocation} from 'react-router-dom'
+import {Redirect, Route, Switch, withRouter} from 'react-router-dom'
 import routes from '../constants/router'
 import guard from '../utils/permissions'
 import nprogress from 'nprogress'
 import {useSelector} from 'react-redux'
-import MenuKey from "@/utils/menuKey"
-import {setMenuKey} from "@/redux/actions";
-import {useDispatch} from "react-redux";
 
 const Routes = () => {
-    const [renderingRoutes, setRenderingRoutes] = useState([])
     const [publicRouteList, setPublicRouteList] = useState([])
 
-    React.useState(nprogress.start());
-    const dispatch = useDispatch()
-    const location = useLocation()
+    React.useState(nprogress.start())
+
+
     useEffect(() => {
-      dispatch(setMenuKey(MenuKey(location.pathname)))
       generatedRoutes(routes)
     }, [])
 
@@ -34,22 +29,17 @@ const Routes = () => {
                 generatedRoutes(e.children)
             } else {
                 setPublicRouteList(old => [...old, (<AppRoute key={e} exact path={e.path} component={e.component}/>)])
-                setRenderingRoutes(old => [...old, e])
+                // setRenderingRoutes(old => [...old, e])
             }
         })
     }
 
     const AppRoute = ({component: Component, ...rest}) => (
-        <Route
-            {...rest}
-            render={(props) => (
-                // <Layout>
-                <Component {...props} />
-                // </Layout>
-            )}
-        />
+        <Route {...rest} render= {(props) => ( <Component {...props} /> )} />
     )
-  console.log(publicRouteList)
+
+        console.log(publicRouteList)
+
     return (
         <Switch>
             {publicRouteList}

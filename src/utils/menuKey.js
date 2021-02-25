@@ -1,9 +1,8 @@
 import router from "@/constants/router"
-
+import guard from "@/utils/permissions";
 let generatedRoutes = []
 function keyGenerator (routes) {
-    return new Promise(resolve => {
-        routes.forEach(e => {
+        routes.filter(e => guard(e.meta.permission) && !e.hidden).forEach(e => {
             if (e.children) {
                 generatedRoutes.push(e.path)
                 keyGenerator(e.children)
@@ -11,15 +10,15 @@ function keyGenerator (routes) {
                 generatedRoutes.push(e.path)
             }
         })
-        resolve(generatedRoutes)
-    })
 }
 export default function MenuKey (pathname) {
-    keyGenerator(router).then(genereted => {
-        for (let i = 0; i < genereted.length; i ++) {
-            if (pathname === genereted[i]) return [(i+1).toString()]
+    keyGenerator(router)
+    for (let i = 0; i < generatedRoutes.length; i ++) {
+        if (pathname === generatedRoutes[i]) {
+            console.log([(i+1).toString()])
+            return [(i+1).toString()]
         }
-    })
+    }
     console.log('GeneratedRoutes', generatedRoutes)
     // switch (pathname) {
     //     case '/': return ['1']
