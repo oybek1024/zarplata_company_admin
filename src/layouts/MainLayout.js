@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import { Layout } from 'antd'
-import RightContent from '../components/RightContent'
-import MenuHeader from '../components/MenuHeader'
-import MainMenu from '../components/menu/Menu'
-import basic from '../constants/basic'
-import '../assets/styles/layout.less'
+import RightContent from '@/components/RightContent'
+import MenuHeader from '@/components/MenuHeader'
+import MainMenu from '@/components/menu/Menu'
+import basic from '@/constants/basic'
+import '@/assets/styles/layout.less'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-
 const { Header, Content, Sider } = Layout
-
 export default function MainLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
   const isAuthorited = useSelector((state) => state.auth.accessToken)
-
   return (
     <div className={`App ${isAuthorited ? '' : 'd-none'}`}>
       <Layout style={{ minHeight: '100vh' }}>

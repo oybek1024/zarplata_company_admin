@@ -48,7 +48,6 @@ export default function Home() {
               <Card title="Home Page" extra={<ExtraButton/>}/>
               <Card>
                   <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
-                      salom
                   </div>
               </Card>
           </div>

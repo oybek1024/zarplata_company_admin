@@ -1,60 +1,57 @@
-import React from 'react'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {Redirect, Route, Switch, withRouter} from 'react-router-dom'
 import routes from '../constants/router'
 import guard from '../utils/permissions'
 import nprogress from 'nprogress'
-import { useSelector } from 'react-redux'
-
-const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) => (
-      // <Layout>
-      <Component {...props} />
-      // </Layout>
-    )}
-  />
-)
+import {useSelector} from 'react-redux'
 
 const Routes = () => {
-  const token = useSelector((state) => state.auth.accessToken)
+    const [publicRouteList, setPublicRouteList] = useState([])
 
-  const publicRouteList = routes
-    .filter(
-      (e) =>
-        guard(e.meta.title) &&
-        (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
-    )
-    .map((item, id) => {
-      return (
-        <AppRoute key={id} exact path={item.path} component={item.component} />
-      )
+    React.useState(nprogress.start())
+
+
+    useEffect(() => {
+      generatedRoutes(routes)
+    }, [])
+
+
+    useEffect(() => {
+      nprogress.done();
+      return () => nprogress.start();
     })
-  console.log(
-    routes.filter(
-      (e) =>
-        guard(e.meta.title) &&
-        (token ? e.meta.isAuthorited : !e.meta.isAuthorited)
+
+
+    const token = useSelector((state) => state.auth.accessToken)
+    function generatedRoutes(rout) {
+        rout.filter(e => guard(e.meta.permission)).forEach((e, i) => {
+            if (e.children && e.children.length) {
+                setPublicRouteList(old => [...old, (<AppRoute key={e} exact path={e.path} component={e.component}/>)])
+                generatedRoutes(e.children)
+            } else {
+                setPublicRouteList(old => [...old, (<AppRoute key={e} exact path={e.path} component={e.component}/>)])
+                // setRenderingRoutes(old => [...old, e])
+            }
+        })
+    }
+
+    const AppRoute = ({component: Component, ...rest}) => (
+        <Route {...rest} render= {(props) => ( <Component {...props} /> )} />
     )
-  )
-  React.useState(nprogress.start());
 
-  React.useEffect(() => {
-    nprogress.done();
-    return () => nprogress.start();
-  });
+        console.log(publicRouteList)
 
-
-  return (
-    <Switch>
-      {publicRouteList}
-      {token ? (
-        <Redirect from='*' to='/404' />
-      ) : (
-        <Redirect from='*' to='/login' />
-      )}
-    </Switch>
-  )
+    return (
+        <Switch>
+            {publicRouteList}
+            {token ? (
+                undefined
+                // <Redirect from='*' to='/404'/>
+            ) : (
+                <Redirect from='*' to='/login'/>
+            )}
+        </Switch>
+    )
 }
 
 export default withRouter(Routes)

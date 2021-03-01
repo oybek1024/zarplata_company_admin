@@ -3,11 +3,11 @@ import { Form, Input, Button, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 // import axios_init from "../../utils/axios_init";
-import { isLoadingOverlay, setAuthTokens } from '@/services/actions'
+import { isLoadingOverlay, setAuthTokens } from '@/redux/actions'
 import './login.less'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from 'react-query'
-import { requests } from '@/services/requests'
+import { requests } from '@/redux/requests'
 import logo from '@/assets/images/muno.svg'
 function Login() {
   const dispatch = useDispatch()
@@ -17,6 +17,7 @@ function Login() {
     onSuccess: (res) => {
       dispatch(isLoadingOverlay(false))
       dispatch(setAuthTokens(res))
+      localStorage.setItem('token', res.access_token)
       history.push('/')
     },
     onError: () => {

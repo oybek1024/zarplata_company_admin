@@ -2,6 +2,7 @@ const path = require('path')
 const hwp = require('html-webpack-plugin')
 // const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
+const port = 7077
 module.exports = {
     mode: 'development',
     entry: { index: path.resolve(__dirname, "src", "index.js") },
@@ -15,15 +16,15 @@ module.exports = {
         filename: '[name].[hash].js',
         publicPath: "/"
     },
+    devtool: "source-map",
     externals: {
         'react': 'React',
         'react-dom': 'ReactDOM',
         'react-router-dom': 'ReactRouterDOM'
     },
     devServer: {
-        allowedHosts: [
-            '*'
-        ],
+        port: port,
+        host: '0.0.0.0',
         disableHostCheck: true,
         historyApiFallback: true
     },
@@ -56,7 +57,7 @@ module.exports = {
                         options: {
                             lessOptions: {
                                 modifyVars: {
-                                    'primary-color': '#0E0D23',
+                                    'primary-color': '#D75246',
                                     'link-color': '#1890ff',
                                     'border-radius-base': '3px',
                                     'border-color-base': '#bab4b4'
