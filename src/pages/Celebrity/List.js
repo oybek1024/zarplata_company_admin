@@ -35,6 +35,11 @@ export default function Contact() {
             key: 'last_name'
         },
         {
+            title: 'Country code',
+            dataIndex: 'country_code',
+            key: 'country_code'
+        },
+        {
             title: 'Phone number',
             dataIndex: 'phone_number',
             key: 'phone_number',

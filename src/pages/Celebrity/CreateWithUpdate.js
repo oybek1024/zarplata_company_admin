@@ -117,8 +117,10 @@ export default function CelebrityCreate() {
         _data.demo_video = video
         _data.country_code = formatPhoneNumberIntl(phone).split(' ')[0].slice(1)
         _data.service_fee = parseInt(values.service_fee)
+        _data.phone_number = formatPhoneNumberIntl(phone).split(' ').slice(1).join('')
         delete _data.image_url
         delete _data.video_url
+        console.log(_data)
         if (_data.demo_video && _data.profile_photo) {
             axios_init.post('/celebrity', _data).then(res => {
                 notification.success('You request received')

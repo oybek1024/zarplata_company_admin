@@ -19,6 +19,7 @@ function Login() {
       dispatch(setAuthTokens(res))
       localStorage.setItem('token', res.access_token)
       history.push('/')
+      document.location.reload()
     },
     onError: () => {
       console.log('error')
