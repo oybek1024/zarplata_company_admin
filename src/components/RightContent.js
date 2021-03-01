@@ -1,6 +1,7 @@
 import { Avatar } from 'antd'
 import { UserOutlined, LogoutOutlined, BellOutlined } from '@ant-design/icons'
 import { Menu, Dropdown, Badge } from 'antd'
+import { useHistory } from 'react-router-dom'
 import './styles/style.less'
 import basic from '../constants/basic'
 import { logout } from '../redux/actions'
@@ -8,11 +9,11 @@ import { useDispatch } from 'react-redux'
 
 function RightContent() {
   const dispatch = useDispatch()
-
+  const history = useHistory()
   const Logout = function () {
     dispatch(logout())
     localStorage.removeItem('token')
-
+    history.push('/login')
   }
   const menu = (
     <Menu>
@@ -21,7 +22,8 @@ function RightContent() {
       </Menu.Item>
       <Menu.Item
         onClick={() => {
-          Logout()
+            Logout()
+
         }}
       >
         <LogoutOutlined /> Log out
