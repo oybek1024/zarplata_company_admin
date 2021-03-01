@@ -26,6 +26,7 @@ const Routes = () => {
     function generatedRoutes(rout) {
         rout.filter(e => guard(e.meta.permission)).forEach((e, i) => {
             if (e.children && e.children.length) {
+                setPublicRouteList(old => [...old, (<AppRoute key={e} exact path={e.path} component={e.component}/>)])
                 generatedRoutes(e.children)
             } else {
                 setPublicRouteList(old => [...old, (<AppRoute key={e} exact path={e.path} component={e.component}/>)])
@@ -44,7 +45,8 @@ const Routes = () => {
         <Switch>
             {publicRouteList}
             {token ? (
-                <Redirect from='*' to='/404'/>
+                undefined
+                // <Redirect from='*' to='/404'/>
             ) : (
                 <Redirect from='*' to='/login'/>
             )}

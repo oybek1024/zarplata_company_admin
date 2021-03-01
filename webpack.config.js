@@ -16,6 +16,7 @@ module.exports = {
         filename: '[name].[hash].js',
         publicPath: "/"
     },
+    devtool: "source-map",
     externals: {
         'react': 'React',
         'react-dom': 'ReactDOM',

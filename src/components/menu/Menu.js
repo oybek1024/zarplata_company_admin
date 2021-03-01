@@ -16,7 +16,7 @@ function MainMenu(props) {
     function menuGenerator (routes) {
         if (routes) {
             return routes.filter(e => guard(e.meta.permission) && !e.hidden).map((e, i) => {
-                if (e.children && e.children.length) {
+                if (e.children && e.children.length && e.isSub) {
                     return (
                         <SubMenu key={e.path} icon={IconFinder(e.meta.icon)} title={e.meta.title}>
                             {

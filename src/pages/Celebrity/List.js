@@ -2,8 +2,14 @@ import React from 'react'
 import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
 import {Button, Card, Table} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-
+import { useHistory } from 'react-router-dom'
+import {isLoadingOverlay} from "@/redux/actions";
+import axios_init from "@/utils/axios_init";
+import { useDispatch } from 'react-redux'
 export default function Contact() {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const [items, setItems] = React.useState([])
     const routes = [
         {
             name: 'Home',
@@ -51,19 +57,26 @@ export default function Contact() {
             )
         }
     ]
-    const items = [
-        {
-            id: 'xxsadw1',
-            first_name: 'Oybek',
-            last_name: 'Mukhiddinov',
-            phone_number: '+998996062053',
-            email: 'mukhiddinov.oybek1024@gmail.com',
-            bio: 'Front End and Backend'
-        }
-    ]
+
+    const getData = function () {
+        dispatch(isLoadingOverlay(true))
+        axios_init.get('/celebrity').then(res => {
+            console.log(res)
+            setItems(res.celebrities)
+        }).finally(() => {
+            dispatch(isLoadingOverlay(false))
+        })
+    }
+    React.useEffect(() => {
+        getData()
+    }, [])
+
+
     const ExtraButton = function () {
         return (
-            <Button type="primary" icon={<PlusOutlined />}>
+            <Button onClick={ () => {
+                history.push('/celebrity/create')
+            }} type="primary" icon={<PlusOutlined />}>
                 Create
             </Button>
         )
