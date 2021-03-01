@@ -3,11 +3,11 @@ import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
 import PhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { DollarCircleOutlined, PlusOutlined, LoadingOutlined } from '@ant-design/icons'
-import {Button, Card, Form, Input, Row, Col, message, Upload, Progress} from "antd";
-// import { useHistory } from 'react-router-dom'
+import {Button, Card, Form, Input, Row, Col, message, Upload, Progress, notification} from "antd";
+import { useHistory } from 'react-router-dom'
 import './style.less'
 // import {isLoadingOverlay} from "@/redux/actions";
-// import axios_init from "@/utils/axios_init";
+import axios_init from "@/utils/axios_init";
 import axios from "axios";
 // import { useDispatch } from 'react-redux'
 
@@ -40,32 +40,26 @@ function beforeUpload(file) {
     if (!isJpgOrPng) {
         message.error('You can only upload JPG/PNG file!');
     }
-    // const isLt2M = file.size / 1024 / 1024 < 2;
-    // if (!isLt2M) {
-    //     message.error('Image must smaller than 2MB!');
-    // }
     return isJpgOrPng;
 }
 function beforeUploadVideo(file) {
-    const isJpgOrPng = file.type === 'video/*';
+    const isJpgOrPng = file.type === 'video/mp4';
     if (!isJpgOrPng) {
         message.error('You can only upload Video file!');
     }
-    // const isLt2M = file.size / 1024 / 1024 < 2;
-    // if (!isLt2M) {
-    //     message.error('Image must smaller than 2MB!');
-    // }
     return isJpgOrPng;
 }
 
 export default function CelebrityCreate() {
     // const history = useHistory()
     const [phone, setPhone]  = React.useState(null)
+    const [image, setImage]  = React.useState(null)
+    const [video, setVideo]  = React.useState(null)
     const [loading, setLoading]  = React.useState(false)
     const [imageUrl, setimageUrl]  = React.useState(null)
     const [progress, setProgress] = React.useState(0)
     const [video_progress, set_video_progress] = React.useState(0)
-
+    const history = useHistory()
     const uploadButton = (
         <div>
             {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -87,9 +81,11 @@ export default function CelebrityCreate() {
                 setProgress(Math.floor((e.loaded * 100) / e.total))
             }
         }).then(res => {
-            getBase64(value.file, image => {
-                console.log(image)
-            })
+            console.log(res)
+            setImage(res.data.filename)
+            // getBase64(value.file, image => {
+            //     console.log(image)
+            // })
         })
         console.log(value)
     }
@@ -106,16 +102,29 @@ export default function CelebrityCreate() {
                 set_video_progress(Math.floor((e.loaded * 100) / e.total))
             }
         }).then(res => {
-            getBase64(value.file, image => {
-                console.log(image)
-            })
+            console.log(res)
+            setVideo(res.data.filename)
+            // getBase64(value.file, image => {
+            //     console.log(image)
+            // })
         })
         console.log(value)
     }
 
     const onFinish = (values) => {
-        console.log(formatPhoneNumberIntl(phone))
-        console.log(values)
+        let _data = values
+        _data.profile_photo = image
+        _data.demo_video = video
+        _data.country_code = formatPhoneNumberIntl(phone).split(' ')[0].slice(1)
+        _data.service_fee = parseInt(values.service_fee)
+        delete _data.image_url
+        delete _data.video_url
+        if (_data.demo_video && _data.profile_photo) {
+            axios_init.post('/celebrity', _data).then(res => {
+                notification.success('You request received')
+                history.push('/celebrity')
+            })
+        }
     }
     return (
         <div>
@@ -278,17 +287,18 @@ export default function CelebrityCreate() {
                         </Col>
                     </Row>
 
-                    {/*<Form.Item>*/}
-                    {/*    <Button*/}
-                    {/*        type='primary'*/}
-                    {/*        htmlType='submit'*/}
-                    {/*        className='login-form-button'*/}
-                    {/*        size='large'*/}
-                    {/*    >*/}
-                    {/*        Войти в систему*/}
-                    {/*    </Button>*/}
-                    {/*    /!*Or <a href="">register now!</a>*!/*/}
-                    {/*</Form.Item>*/}
+                    <Form.Item>
+                        <Button
+                            style={{ marginLeft: '10px' }}
+                            type='primary'
+                            htmlType='submit'
+                            className='login-form-button'
+                            size='large'
+                        >
+                            Save
+                        </Button>
+                        {/*Or <a href="">register now!</a>*/}
+                    </Form.Item>
                 </Form>
             </Card>
         </div>
