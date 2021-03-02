@@ -18,7 +18,7 @@ function Login() {
       dispatch(isLoadingOverlay(false))
       dispatch(setAuthTokens(res))
       localStorage.setItem('token', res.access_token)
-      history.push('/')
+      history.push('/celebrity')
       document.location.reload()
     },
     onError: () => {

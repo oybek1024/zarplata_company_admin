@@ -5,6 +5,10 @@ import App from './App'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import { store } from "./redux/store";
 import {Provider} from "react-redux";
+import '@/locales/i18n'
+
+
+
 const queryCache = new QueryCache({
   defaultConfig: {
     queries: {

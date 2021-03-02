@@ -74,7 +74,7 @@ module.exports = {
         new hwp(
             {
                 template: 'public/index.html',
-                favicon: 'public/favicon.jpg'
+                favicon: 'public/favicon.svg'
             }
         ),
         // new webpack.DefinePlugin({

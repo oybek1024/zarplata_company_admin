@@ -2,14 +2,14 @@ import { lazy } from 'react'
 
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    isSub: false,
-    component: lazy(() => import('@/pages/Home/Home')),
-    meta: { title: 'home', icon: 'PieChartOutlined', permission: 'home' },
-    children: [],
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   isSub: false,
+  //   component: lazy(() => import('@/pages/Home/Home')),
+  //   meta: { title: 'home', icon: 'PieChartOutlined', permission: 'home' },
+  //   children: [],
+  // },
   {
     path: '/celebrity',
     name: 'celebrity',

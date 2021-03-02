@@ -12,11 +12,6 @@ export default function Contact() {
     const [items, setItems] = React.useState([])
     const routes = [
         {
-            name: 'Home',
-            route: '/',
-            link: true
-        },
-        {
             name: 'Celebrity',
             route: '/celebrity',
             link: false

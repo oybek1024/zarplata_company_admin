@@ -2,7 +2,7 @@ import React from 'react'
 import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
 import PhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import { DollarCircleOutlined, PlusOutlined, LoadingOutlined } from '@ant-design/icons'
+import { DollarCircleOutlined, CheckCircleOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import {Button, Card, Form, Input, Row, Col, message, Upload, Progress, notification} from "antd";
 import { useHistory } from 'react-router-dom'
 import './style.less'
@@ -12,11 +12,6 @@ import axios from "axios";
 // import { useDispatch } from 'react-redux'
 
 const routes = [
-    {
-        name: 'Home',
-        route: '/',
-        link: true
-    },
     {
         name: 'Celebrity',
         route: '/celebrity',
@@ -28,6 +23,31 @@ const routes = [
         link: false
     }
 ]
+
+const uploadButton = function (type) {
+       if (type === 'image') {
+           return (
+               <div>
+                   <PictureOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
+                   <div style={{ marginTop: 8 }}>Upload Image</div>
+               </div>
+           )
+       } else if (type === 'video') {
+           return (
+               <div>
+                   <VideoCameraOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
+                   <div style={{ marginTop: 8 }}>Upload Video</div>
+               </div>
+           )
+       } else if (type === 'success') {
+           return (
+               <div>
+                   <CheckCircleOutlined style={{ fontSize: '50px', color: '#14c909' }}/>
+                   <div style={{ marginTop: 8 }}>Video uploaded successfully</div>
+               </div>
+           )
+       }
+}
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -56,19 +76,16 @@ export default function CelebrityCreate() {
     const [image, setImage]  = React.useState(null)
     const [video, setVideo]  = React.useState(null)
     const [loading, setLoading]  = React.useState(false)
+    const [video_loading, setVideoLoading]  = React.useState(false)
     const [imageUrl, setimageUrl]  = React.useState(null)
+    const [videoUrl, setVideoUrl]  = React.useState(null)
     const [progress, setProgress] = React.useState(0)
     const [video_progress, set_video_progress] = React.useState(0)
     const history = useHistory()
-    const uploadButton = (
-        <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
 
 
     const uploadImage = function (value) {
+        setLoading(true)
         const image = new FormData
         image.append('file', value.file)
         axios.post(`${process.env.REACT_APP_BASE_URL}/image-upload`, image, {
@@ -77,38 +94,35 @@ export default function CelebrityCreate() {
                 'Content-Type': 'multipart/form-data',
             },
             onUploadProgress: e => {
-                console.log(e)
                 setProgress(Math.floor((e.loaded * 100) / e.total))
             }
         }).then(res => {
-            console.log(res)
             setImage(res.data.filename)
-            // getBase64(value.file, image => {
-            //     console.log(image)
-            // })
+            getBase64(value.file, image => {
+                setimageUrl(image)
+            })
+        }).finally(() => {
+            setLoading(false)
         })
-        console.log(value)
     }
     const uploadVideo = function (value) {
         const image = new FormData
         image.append('file', value.file)
+        setVideoLoading(true)
         axios.post(`${process.env.REACT_APP_BASE_URL}/image-upload`, image, {
             headers: {
                 'Authorization': localStorage.getItem('token'),
                 'Content-Type': 'multipart/form-data',
             },
             onUploadProgress: e => {
-                console.log(e)
                 set_video_progress(Math.floor((e.loaded * 100) / e.total))
             }
         }).then(res => {
-            console.log(res)
             setVideo(res.data.filename)
-            // getBase64(value.file, image => {
-            //     console.log(image)
-            // })
+            setVideoUrl(true)
+        }).finally(() => {
+            setVideoLoading(false)
         })
-        console.log(value)
     }
 
     const onFinish = (values) => {
@@ -249,15 +263,18 @@ export default function CelebrityCreate() {
                                     customRequest={uploadImage}
                                     beforeUpload={beforeUpload}
                                 >
-                                    <Progress
-                                        strokeColor={{
-                                            from: '#108ee9',
-                                            to: '#87d068',
-                                        }}
-                                        percent={progress}
-                                        status="active"
-                                    />
-                                    {/*{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}*/}
+                                    {
+                                        loading ? (
+                                            <Progress
+                                                strokeColor={{
+                                                    from: '#108ee9',
+                                                    to: '#87d068',
+                                                }}
+                                                percent={progress}
+                                                status="active"
+                                            />
+                                        ) : (imageUrl ? <img src={imageUrl} alt="avatar" className="upload_image" style={{ width: '100%' }} /> : uploadButton('image'))
+                                    }
                                 </Upload>
                             </Form.Item>
                         </Col>
@@ -275,15 +292,18 @@ export default function CelebrityCreate() {
                                     customRequest={uploadVideo}
                                     beforeUpload={beforeUploadVideo}
                                 >
-                                    <Progress
-                                        strokeColor={{
-                                            from: '#108ee9',
-                                            to: '#87d068',
-                                        }}
-                                        percent={video_progress}
-                                        status="active"
-                                    />
-                                    {/*{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}*/}
+                                    {
+                                        video_loading ? (
+                                            <Progress
+                                                strokeColor={{
+                                                    from: '#108ee9',
+                                                    to: '#87d068',
+                                                }}
+                                                percent={video_progress}
+                                                status="active"
+                                            />
+                                        ) : (videoUrl ? uploadButton('success') : uploadButton('video'))
+                                    }
                                 </Upload>
                             </Form.Item>
                         </Col>

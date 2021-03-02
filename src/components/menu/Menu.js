@@ -8,9 +8,11 @@ import { useLocation } from 'react-router-dom'
 import './menu.less'
 import { Link, Redirect } from "react-router-dom";
 import React from "react";
+import { useTranslation } from 'react-i18next';
 const { SubMenu } = Menu
 function MainMenu(props) {
     // const menu_key = useSelector((state) => state.basics.menu_key)
+    const { t, i18n } = useTranslation()
     const location = useLocation()
     // console.log(menu_key)
     function menuGenerator (routes) {
@@ -27,7 +29,7 @@ function MainMenu(props) {
                 } else {
                     return (
                         <Menu.Item key={e.path} icon={IconFinder(e.meta.icon)}>
-                            <Link to={e.path}>{e.name}</Link>
+                            <Link to={e.path}>{ t(e.meta.title) }</Link>
                         </Menu.Item>
                     )
                 }
