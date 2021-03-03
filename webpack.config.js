@@ -2,6 +2,7 @@ const path = require('path')
 const hwp = require('html-webpack-plugin')
 // const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const port = 7077
 module.exports = {
     mode: 'development',
@@ -9,12 +10,33 @@ module.exports = {
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src/'),
+            "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.js")
         }
     },
     output: {
         path: path.join(__dirname, '/dist'),
-        filename: '[name].[hash].js',
+        filename: '[name].bundle.js',
         publicPath: "/"
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /node_modules\/(?!antd\/).*/,
+                    name: "vendors",
+                    chunks: "all",
+                },
+                // This can be your own design library.
+                antd: {
+                    test: /node_modules\/(antd\/).*/,
+                    name: "antd",
+                    chunks: "all",
+                },
+            },
+        },
+        runtimeChunk: {
+            name: "manifest",
+        },
     },
     devtool: "source-map",
     externals: {
@@ -77,6 +99,7 @@ module.exports = {
                 favicon: 'public/favicon.svg'
             }
         ),
+        new BundleAnalyzerPlugin(),
         // new webpack.DefinePlugin({
         //     'process.env': {
         //         'REACT_APP_PORT': JSON.stringify(process.env.REACT_APP_PORT)

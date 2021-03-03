@@ -103,6 +103,11 @@ export default function CelebrityCreate() {
             })
         }).finally(() => {
             setLoading(false)
+        }).catch(err => {
+            if (err.status === 401) {
+                localStorage.removeItem('token')
+                history.push('/login')
+            }
         })
     }
     const uploadVideo = function (value) {
@@ -122,6 +127,11 @@ export default function CelebrityCreate() {
             setVideoUrl(true)
         }).finally(() => {
             setVideoLoading(false)
+        }).catch(err => {
+            if (err.status === 401) {
+                localStorage.removeItem('token')
+                history.push('/login')
+            }
         })
     }
 
