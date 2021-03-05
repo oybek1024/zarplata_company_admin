@@ -2,54 +2,56 @@ import React from 'react'
 import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
 import {Table, Space, Tag, Card, Button} from 'antd'
 import { PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import axios_init from "@/utils/axios_init";
 // import { useQuery } from 'react-query'
 import { useDispatch } from 'react-redux'
 import { isLoadingOverlay } from "@/redux/actions";
 export default function Contact() {
     const dispatch = useDispatch()
+    const { t } = useTranslation()
     const [items, setItems] = React.useState([])
     const routes = [
         {
-            name: 'Clients',
+            name: 'clients',
             route: '/clients',
             link: false
         }
     ]
     const columns = [
         {
-            title: 'First name',
+            title: t('first.name'),
             dataIndex: 'first_name',
             key: 'first_name',
             render: text => <strong>{text}</strong>,
         },
         {
-            title: 'Last name',
+            title: t('last.name'),
             dataIndex: 'last_name',
             key: 'last_name'
         },
         {
-            title: 'Phone number',
+            title: t('phone.number'),
             dataIndex: 'phone_number',
             key: 'phone_number',
         },
         {
-            title: 'Email',
+            title: t('email'),
             dataIndex: 'email',
             key: 'email',
         },
         {
-            title: 'Bio',
+            title: t('bio'),
             dataIndex: 'bio',
             key: 'bio',
         },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <a>Delete</a>
-            )
-        }
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (text, record) => (
+        //         <a>Delete</a>
+        //     )
+        // }
     ];
     const getData = function () {
         dispatch(isLoadingOverlay(true))
@@ -72,7 +74,7 @@ export default function Contact() {
     return (
         <div>
             <BreadCrumbTemplete routes={routes}/>
-            <Card title="Clients">
+            <Card title={t('clients')}>
                 <Table columns={columns} dataSource={items} rowKey={ (record) => record.id } scroll={{ x: 100 }}/>
             </Card>
         </div>

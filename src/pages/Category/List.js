@@ -1,6 +1,6 @@
 import React from 'react'
 import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
-import {Button, Card, Table} from "antd";
+import {Button, Card, Table, Tag } from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import { useHistory } from 'react-router-dom'
 import {isLoadingOverlay} from "@/redux/actions";
@@ -14,43 +14,42 @@ export default function Contact() {
     const [items, setItems] = React.useState([])
     const routes = [
         {
-            name: 'celebrity',
-            route: '/celebrity',
+            name: 'category',
+            route: '/category',
             link: false
         }
     ]
     const columns = [
         {
-            title: t('first.name'),
-            dataIndex: 'first_name',
-            key: 'first_name',
-            render: text => <strong>{text}</strong>,
+            title: t('name'),
+            dataIndex: 'name',
+            key: 'name',
+            render: text => {
+               return <p>{ text.uz } - {text.ru} - {text.en}</p>
+            },
         },
         {
-            title: t('last.name'),
-            dataIndex: 'last_name',
-            key: 'last_name'
+            title: t('description'),
+            dataIndex: 'description',
+            key: 'description',
+            render: text => {
+                return <p>{ text.uz } - {text.ru} - {text.en}</p>
+            },
         },
         {
-            title: t('country.code'),
-            dataIndex: 'country_code',
-            key: 'country_code'
+            title: t('order_no'),
+            dataIndex: 'order_no',
+            key: 'order_no'
         },
         {
-            title: t('phone.number'),
-            dataIndex: 'phone_number',
-            key: 'phone_number',
-        },
-        {
-            title: t('email'),
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: t('bio'),
-            dataIndex: 'bio',
-            key: 'bio',
-        },
+            title: t('status'),
+            dataIndex: 'is_active',
+            key: 'is_active',
+            render: text => {
+                if (text) return <Tag color="#108ee9">{t('active')}</Tag>
+                else return <Tag color="#f50">{ t('inactive')} }</Tag>
+            }
+        }
         // {
         //     title: 'Action',
         //     key: 'action',
@@ -62,9 +61,9 @@ export default function Contact() {
 
     const getData = function () {
         dispatch(isLoadingOverlay(true))
-        axios_init.get('/celebrity').then(res => {
+        axios_init.get('/category').then(res => {
             console.log(res)
-            setItems(res.celebrities)
+            setItems(res.categories)
         }).finally(() => {
             dispatch(isLoadingOverlay(false))
         })
@@ -77,7 +76,7 @@ export default function Contact() {
     const ExtraButton = function () {
         return (
             <Button onClick={ () => {
-                history.push('/celebrity/create')
+                history.push('/category/create')
             }} type="primary" icon={<PlusOutlined />}>
                 Create
             </Button>

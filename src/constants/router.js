@@ -17,19 +17,43 @@ const routes = [
     component: lazy(() => import('@/pages/Celebrity/List')),
     meta: { title: 'celebrity', icon: 'UserOutlined', permission: 'celebrity' },
     children: [
-      // {
-      //   path: '/celebrity/list',
-      //   name: 'CelebrityList',
-      //   exact: true,
-      //   component: lazy(() => import('@/pages/Celebrity/List')),
-      //   meta: { title: 'celebrity', icon: 'UserOutlined', permission: 'celebrity' },
-      //   children: []
-      // },
       {
         path: '/celebrity/create',
         name: 'CelebrityCreate',
-        component: lazy(() => import('@/pages/Celebrity/CreateWithUpdate')),
+        component: lazy(() => import('@/pages/Celebrity/Create')),
         meta: { title: 'celebrity', icon: 'UserOutlined', permission: 'celebrity' },
+        children: []
+      }
+    ],
+  },
+  {
+    path: '/category',
+    name: 'category',
+    isSub: false,
+    component: lazy(() => import('@/pages/Category/List')),
+    meta: { title: 'category', icon: 'AppstoreOutlined', permission: 'category' },
+    children: [
+      {
+        path: '/category/create',
+        name: 'CategoryCreate',
+        component: lazy(() => import('@/pages/Category/Create')),
+        meta: { title: 'category', icon: 'AppstoreOutlined', permission: 'category' },
+        children: []
+      }
+    ],
+  },
+  {
+    path: '/featured',
+    name: 'featured',
+    isSub: false,
+    component: lazy(() => import('@/pages/Featured/List')),
+    meta: { title: 'featured', icon: 'AppstoreOutlined', permission: 'featured' },
+    children: [
+      {
+        path: '/featured/create',
+        name: 'FeaturedCreate',
+        component: lazy(() => import('@/pages/Featured/Create')),
+        meta: { title: 'featured', icon: 'AppstoreOutlined', permission: 'featured' },
         children: []
       }
     ],

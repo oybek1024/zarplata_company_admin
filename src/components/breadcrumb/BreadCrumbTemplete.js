@@ -3,6 +3,7 @@ import React from "react";
 import { ArrowLeftOutlined } from '@ant-design/icons'
 // import { useDispatch } from "react-redux";
 import { Link, useHistory } from 'react-router-dom'
+import { useTranslation } from "react-i18next";
 import './style.css'
 // import MenuKey from "../../utils/menuKey";
 // import {setMenuKey} from "../../redux/actions";
@@ -10,6 +11,7 @@ const BreadCrumbTemplete = function(props) {
     const routes = props.routes
     // const dispatch = useDispatch()
     const history = useHistory()
+    const { t, i18n } = useTranslation()
 
     return (
         <div className="breadCrumb">
@@ -20,7 +22,7 @@ const BreadCrumbTemplete = function(props) {
                         {
                             routes.map(e =>
                                 <Breadcrumb.Item key={e.name}>
-                                    { e.link ? ( <Link to={e.route} style={{ fontSize: '16px' }} replace>{ e.name }</Link> ) : <span style={{ fontSize: '16px' }}>{ e.name }</span> }
+                                    { e.link ? ( <Link to={e.route} style={{ fontSize: '16px' }} replace>{ t(e.name) }</Link> ) : <span style={{ fontSize: '16px' }}>{t(e.name) }</span> }
                                 </Breadcrumb.Item>
                             )
                         }
