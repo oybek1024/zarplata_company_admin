@@ -2,7 +2,7 @@ const path = require('path')
 const hwp = require('html-webpack-plugin')
 // const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const port = 7077
 module.exports = {
     mode: 'development',
@@ -99,7 +99,7 @@ module.exports = {
                 favicon: 'public/favicon.svg'
             }
         ),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         // new webpack.DefinePlugin({
         //     'process.env': {
         //         'REACT_APP_PORT': JSON.stringify(process.env.REACT_APP_PORT)
