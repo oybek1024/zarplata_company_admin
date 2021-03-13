@@ -28,25 +28,38 @@ export default function Contact() {
             dataIndex: 'name',
             key: 'name',
             render: text => {
-               return <p>{ text.uz } - {text.ru} - {text.en}</p>
-            },
+                return <p>
+                    { text.uz}
+                    <br/>
+                    {text.ru}
+                    <br/>
+                    {text.en }
+                </p>
+            }
         },
         {
             title: t('description'),
             dataIndex: 'description',
             key: 'description',
             render: text => {
-                return <p>{ text.uz } - {text.ru} - {text.en}</p>
+                return <p>
+                    { text.uz}
+                    <br/>
+                    {text.ru}
+                    <br/>
+                    {text.en }
+                </p>
             },
         },
         {
-            title: t('order_no'),
+            title: t('order.no'),
             dataIndex: 'order_no',
             key: 'order_no'
         },
         {
             title: t('status'),
             dataIndex: 'is_active',
+            align: 'center',
             key: 'is_active',
             render: text => {
                 if (text) return <Tag color="#108ee9">{t('active')}</Tag>
@@ -54,8 +67,9 @@ export default function Contact() {
             }
         },
         {
-            title: 'Action',
+            title: t('action'),
             key: 'action',
+            align: 'center',
             render: (text, record) => (
                 <Button onClick={ () => { openModal(text.id) }} type="primary" icon={ <PullRequestOutlined /> } />
             )

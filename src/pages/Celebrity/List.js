@@ -14,7 +14,7 @@ export default function Contact() {
     const [items, setItems] = React.useState([])
     const routes = [
         {
-            name: 'celebrity',
+            name: t('celebrity'),
             route: '/celebrity',
             link: false
         }
@@ -79,7 +79,7 @@ export default function Contact() {
             <Button onClick={ () => {
                 history.push('/celebrity/create')
             }} type="primary" icon={<PlusOutlined />}>
-                Create
+                { t('create') }
             </Button>
         )
     }

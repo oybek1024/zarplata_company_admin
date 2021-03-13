@@ -5,6 +5,7 @@ import 'react-phone-number-input/style.css'
 import { DollarCircleOutlined, CheckCircleOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import {Button, Card, Form, Input, Row, Col, message, Upload, Progress, notification} from "antd";
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from "react-i18next"
 import './style.less'
 // import {isLoadingOverlay} from "@/redux/actions";
 import axios_init from "@/utils/axios_init";
@@ -13,62 +14,16 @@ import axios from "axios";
 
 const routes = [
     {
-        name: 'Celebrity',
+        name: 'celebrity',
         route: '/celebrity',
         link: true
     },
     {
-        name: 'Celebrity Create',
+        name: 'celebrity.create',
         route: '/celebrity/create',
         link: false
     }
 ]
-
-const uploadButton = function (type) {
-       if (type === 'image') {
-           return (
-               <div>
-                   <PictureOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
-                   <div style={{ marginTop: 8 }}>Upload Image</div>
-               </div>
-           )
-       } else if (type === 'video') {
-           return (
-               <div>
-                   <VideoCameraOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
-                   <div style={{ marginTop: 8 }}>Upload Video</div>
-               </div>
-           )
-       } else if (type === 'success') {
-           return (
-               <div>
-                   <CheckCircleOutlined style={{ fontSize: '50px', color: '#14c909' }}/>
-                   <div style={{ marginTop: 8 }}>Video uploaded successfully</div>
-               </div>
-           )
-       }
-}
-
-function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
-
-function beforeUpload(file) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    return isJpgOrPng;
-}
-function beforeUploadVideo(file) {
-    const isJpgOrPng = file.type === 'video/mp4';
-    if (!isJpgOrPng) {
-        message.error('You can only upload Video file!');
-    }
-    return isJpgOrPng;
-}
 
 export default function CelebrityCreate() {
     // const history = useHistory()
@@ -82,7 +37,51 @@ export default function CelebrityCreate() {
     const [progress, setProgress] = React.useState(0)
     const [video_progress, set_video_progress] = React.useState(0)
     const history = useHistory()
+    const { t } = useTranslation()
+    const uploadButton = function (type) {
+        if (type === 'image') {
+            return (
+                <div>
+                    <PictureOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
+                    <div style={{ marginTop: 8 }}>{ t('image.upload') }</div>
+                </div>
+            )
+        } else if (type === 'video') {
+            return (
+                <div>
+                    <VideoCameraOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
+                    <div style={{ marginTop: 8 }}>{ t('video.upload') }</div>
+                </div>
+            )
+        } else if (type === 'success') {
+            return (
+                <div>
+                    <CheckCircleOutlined style={{ fontSize: '50px', color: '#14c909' }}/>
+                    <div style={{ marginTop: 8 }}>{ t('video.upload.successfully') }</div>
+                </div>
+            )
+        }
+    }
+    function getBase64(img, callback) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    }
 
+    function beforeUpload(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+        }
+        return isJpgOrPng;
+    }
+    function beforeUploadVideo(file) {
+        const isJpgOrPng = file.type === 'video/mp4';
+        if (!isJpgOrPng) {
+            message.error('You can only upload Video file!');
+        }
+        return isJpgOrPng;
+    }
 
     const uploadImage = function (value) {
         setLoading(true)
@@ -155,7 +154,7 @@ export default function CelebrityCreate() {
     return (
         <div>
             <BreadCrumbTemplete routes={routes}/>
-            <Card title="Celebrity create">
+            <Card title={t('celebrity.create')}>
                 <Form
                     name='normal_login'
                     layout="vertical"
@@ -168,25 +167,25 @@ export default function CelebrityCreate() {
                             <Form.Item
                                 style={{ margin: '10px 10px' }}
                                 name='first_name'
-                                label='First Name'
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                label={ t('first.name') }
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Input
                                     size="medium"
-                                    placeholder='First Name'
+                                    placeholder={ t('first.name') }
                                 />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item
                                 name='last_name'
-                                label='Last Name'
+                                label={ t('last.name') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message:  t('required.field') }]}
                             >
                                 <Input
                                     size="medium"
-                                    placeholder='Last Name'
+                                    placeholder={ t('last.name') }
                                 />
                             </Form.Item>
                         </Col>
@@ -194,14 +193,14 @@ export default function CelebrityCreate() {
                             <Form.Item
                                 style={{ margin: '10px 10px' }}
                                 name='phone_number'
-                                label='Phone Number'
+                                label={ t('phone.number') }
                                 hasFeedback={phone && isValidPhoneNumber(phone) ? true : false}
                                 validateStatus="success"
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <PhoneInput
                                     className="ant-input"
-                                    placeholder="Phone"
+                                    placeholder={ t('phone.number') }
                                     defaultCountry="UZ"
                                     international
                                     value={phone}
@@ -212,9 +211,9 @@ export default function CelebrityCreate() {
                         <Col span={12}>
                             <Form.Item
                                 name='email'
-                                label='Email'
+                                label={ t('email') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }, { type: 'email', message: 'Syntax Error Email' }]}
+                                rules={[{ required: true, message: t('required.field') }, { type: 'email', message: 'Syntax Error Email' }]}
                             >
                                 <Input size="medium" />
                             </Form.Item>
@@ -223,8 +222,8 @@ export default function CelebrityCreate() {
                             <Form.Item
                                 style={{ margin: '10px 10px' }}
                                 name='username'
-                                label='Username'
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                label={ t('username') }
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Input size="medium"/>
                             </Form.Item>
@@ -232,9 +231,9 @@ export default function CelebrityCreate() {
                         <Col span={12}>
                             <Form.Item
                                 name='password'
-                                label='Password'
+                                label={ t('password') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Input.Password type='password' size="medium" />
                             </Form.Item>
@@ -242,9 +241,9 @@ export default function CelebrityCreate() {
                         <Col span={12}>
                             <Form.Item
                                 name='service_fee'
-                                label='Price'
+                                label={ t('price') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Input type='number' size="medium" prefix={<DollarCircleOutlined className='site-form-item-icon' />} />
                             </Form.Item>
@@ -252,9 +251,9 @@ export default function CelebrityCreate() {
                         <Col span={12}>
                             <Form.Item
                                 name='bio'
-                                label='Biography'
+                                label={ t('bio') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Input size="medium" />
                             </Form.Item>
@@ -262,9 +261,9 @@ export default function CelebrityCreate() {
                         <Col span={12}>
                             <Form.Item
                                 name='image_url'
-                                label='Image Upload'
+                                label={ t('image.upload') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Upload
                                     listType="picture-card"
@@ -291,9 +290,9 @@ export default function CelebrityCreate() {
                         <Col span={12}>
                             <Form.Item
                                 name='video_url'
-                                label='Video Upload'
+                                label={ t('video.upload') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Upload
                                     listType="picture-card"
@@ -318,18 +317,26 @@ export default function CelebrityCreate() {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Form.Item>
-                        <Button
-                            style={{ marginLeft: '10px' }}
-                            type='primary'
-                            htmlType='submit'
-                            className='login-form-button'
-                            size='large'
-                        >
-                            Save
-                        </Button>
-                        {/*Or <a href="">register now!</a>*/}
+                        <div style={{ marginLeft: '10px', marginRight: '10px', position: 'absolute', right: '0' }}>
+                            <Button
+                                type='default'
+                                className='login-form-button'
+                                size='large'
+                                onClick={() => { history.push('/celebrity') }}
+                            >
+                                { t('cancel') }
+                            </Button>
+                            <Button
+                                style={{ marginLeft: '10px'}}
+                                type='primary'
+                                htmlType='submit'
+                                className='login-form-button'
+                                size='large'
+                            >
+                                { t('save') }
+                            </Button>
+                        </div>
                     </Form.Item>
                 </Form>
             </Card>

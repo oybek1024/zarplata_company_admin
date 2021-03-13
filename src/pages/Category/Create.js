@@ -18,7 +18,7 @@ const routes = [
         link: true
     },
     {
-        name: 'create',
+        name: 'create.category',
         route: '/celebrity/create',
         link: false
     }
@@ -53,7 +53,7 @@ export default function CelebrityCreate() {
             return (
                 <div>
                     <PictureOutlined style={{ fontSize: '50px', color: '#D75246' }}/>
-                    <div style={{ marginTop: 8 }}>{ t('upload.image') }</div>
+                    <div style={{ marginTop: 8 }}>{ t('image.upload') }</div>
                 </div>
             )
         }
@@ -111,7 +111,7 @@ export default function CelebrityCreate() {
     return (
         <div>
             <BreadCrumbTemplete routes={routes}/>
-            <Card title={t('category.create')}>
+            <Card title={t('create.category')}>
                 <Form
                     name='normal_login'
                     layout="vertical"
@@ -129,7 +129,7 @@ export default function CelebrityCreate() {
                                                 style={{ margin: '10px 10px' }}
                                                 name='name_uz'
                                                 label={t('name')}
-                                                rules={[{ required: true, message: t('require.input') }]}
+                                                rules={[{ required: true, message: t('required.field') }]}
                                             >
                                                 <Input
                                                     size="medium"
@@ -142,7 +142,7 @@ export default function CelebrityCreate() {
                                                 style={{ margin: '10px 10px' }}
                                                 name='description_uz'
                                                 label={t('description')}
-                                                rules={[{ required: true, message: t('require.input') }]}
+                                                rules={[{ required: true, message: t('required.field') }]}
                                             >
                                                 <Input
                                                     size="medium"
@@ -215,7 +215,7 @@ export default function CelebrityCreate() {
                                 name='order_no'
                                 label={ t('order.no') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('require.input') }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Input type='number' size="medium" />
                             </Form.Item>
@@ -225,7 +225,7 @@ export default function CelebrityCreate() {
                                 name='image_url'
                                 label={ t('image.upload') }
                                 style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('require.image') }]}
+                                rules={[{ required: true, message: t('required.field') }]}
                             >
                                 <Upload
                                     listType="picture-card"

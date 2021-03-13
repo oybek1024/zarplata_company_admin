@@ -27,7 +27,13 @@ export default function Contact() {
             dataIndex: 'name',
             key: 'name',
             render: text => {
-                return <p>{ text.uz } - {text.ru} - {text.en}</p>
+                return <p>
+                    { text.uz}
+                    <br/>
+                    {text.ru}
+                    <br/>
+                    {text.en }
+                </p>
             },
         },
         {
@@ -35,11 +41,17 @@ export default function Contact() {
             dataIndex: 'description',
             key: 'description',
             render: text => {
-                return <p>{ text.uz } - {text.ru} - {text.en}</p>
+                return <p>
+                    { text.uz}
+                    <br/>
+                    {text.ru}
+                    <br/>
+                    {text.en }
+                </p>
             },
         },
         {
-            title: t('order_no'),
+            title: t('order.no'),
             dataIndex: 'order_no',
             key: 'order_no'
         },
@@ -47,14 +59,16 @@ export default function Contact() {
             title: t('status'),
             dataIndex: 'is_active',
             key: 'is_active',
+            align: 'center',
             render: text => {
                 if (text) return <Tag color="#108ee9">{t('active')}</Tag>
                 else return <Tag color="#f50">{ t('inactive')} }</Tag>
             }
         },
         {
-            title: 'Action',
+            title: t('status'),
             key: 'action',
+            align: 'center',
             render: (text, record) => (
                 <Button onClick={ () => { openModal(text.id) }} type="primary" icon={ <PullRequestOutlined /> } />
             )
@@ -90,7 +104,7 @@ export default function Contact() {
             <Button onClick={ () => {
                 history.push('/featured/create')
             }} type="primary" icon={<PlusOutlined />}>
-                Create
+                { t('create') }
             </Button>
         )
     }
