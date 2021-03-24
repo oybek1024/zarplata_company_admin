@@ -4,21 +4,23 @@ import routes from '../constants/router'
 import guard from '../utils/permissions'
 import nprogress from 'nprogress'
 import {useSelector} from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const Routes = () => {
     const [publicRouteList, setPublicRouteList] = useState([])
+    const [isGenerated, setIsGenerated] = useState(false)
 
     React.useState(nprogress.start())
 
 
     useEffect(() => {
-      generatedRoutes(routes)
+        generatedRoutes(routes)
     }, [])
 
 
     useEffect(() => {
-      nprogress.done();
-      return () => nprogress.start();
+        nprogress.done();
+        return () => nprogress.start();
     })
 
 
@@ -31,6 +33,7 @@ const Routes = () => {
             } else {
                 setPublicRouteList(old => [...old, (<AppRoute key={e} exact path={e.path} component={e.component}/>)])
                 // setRenderingRoutes(old => [...old, e])
+                setIsGenerated(true)
             }
         })
     }
@@ -39,18 +42,25 @@ const Routes = () => {
         <Route {...rest} render= {(props) => ( <Component {...props} /> )} />
     )
 
-        console.log(publicRouteList)
+    console.log(publicRouteList)
+    console.log("Token: ", token)
 
     return (
-        <Switch>
-            {publicRouteList}
-            {token ? (
-                undefined
-                // <Redirect from='*' to='/404'/>
+        <>
+            {isGenerated ? (
+                <Switch>
+                    {publicRouteList}
+                    {token ? (
+                        // undefined
+                        <Redirect from='*' to='/404'/>
+                    ) : (
+                        <Redirect from='*' to='/login'/>
+                    )}
+                </Switch>
             ) : (
-                <Redirect from='*' to='/login'/>
+                undefined
             )}
-        </Switch>
+        </>
     )
 }
 
