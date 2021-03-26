@@ -54,11 +54,11 @@ export default function Contact() {
         // }
     ];
     const getData = function () {
-        dispatch(isLoadingOverlay(true))
+        // dispatch(isLoadingOverlay(true))
         axios_init.get('/client').then(res => {
             setItems(res.clients)
         }).finally(() => {
-            dispatch(isLoadingOverlay(false))
+            // dispatch(isLoadingOverlay(false))
         })
     }
     React.useEffect(() => {

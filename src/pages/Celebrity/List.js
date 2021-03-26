@@ -61,12 +61,12 @@ export default function Contact() {
     ]
 
     const getData = function () {
-        dispatch(isLoadingOverlay(true))
+        // dispatch(isLoadingOverlay(true))
         axios_init.get('/celebrity').then(res => {
             console.log(res)
             setItems(res.celebrities)
         }).finally(() => {
-            dispatch(isLoadingOverlay(false))
+            // dispatch(isLoadingOverlay(false))
         })
     }
     React.useEffect(() => {
