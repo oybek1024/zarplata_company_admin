@@ -50,8 +50,8 @@ const Routes = () => {
             {isGenerated ? (
                 <Switch>
                     {publicRouteList}
-                    <Redirect from='/' to='/celebrity'/>
-                    {token ? (
+                    { token ? (<Redirect from='/' to='/celebrity'/>) : undefined}
+                    { token ? (
                         // undefined
                         <Redirect from='*' to='/404'/>
                     ) : (
