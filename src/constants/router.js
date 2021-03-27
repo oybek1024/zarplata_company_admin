@@ -23,6 +23,13 @@ const routes = [
         component: lazy(() => import('@/pages/Celebrity/Create')),
         meta: { title: 'celebrity', icon: 'UserOutlined', permission: 'celebrity' },
         children: []
+      },
+      {
+        path: '/celebrity/edit',
+        name: 'CelebrityEdit',
+        component: lazy(() => import('@/pages/Celebrity/Create')),
+        meta: { title: 'celebrity', icon: 'UserOutlined', permission: 'celebrity' },
+        children: []
       }
     ],
   },

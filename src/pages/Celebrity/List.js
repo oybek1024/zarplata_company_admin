@@ -1,7 +1,7 @@
 import React from 'react'
 import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
 import {Button, Card, Table} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
+import {PlusOutlined, EditOutlined} from "@ant-design/icons";
 import { useHistory } from 'react-router-dom'
 import {isLoadingOverlay} from "@/redux/actions";
 import axios_init from "@/utils/axios_init";
@@ -51,13 +51,14 @@ export default function Contact() {
             dataIndex: 'bio',
             key: 'bio',
         },
-        // {
-        //     title: 'Action',
-        //     key: 'action',
-        //     render: (text, record) => (
-        //         <a>Delete</a>
-        //     )
-        // }
+        {
+            title: t('action'),
+            key: 'action',
+            align: 'center',
+            render: (text, record) => (
+                <Button onClick={ () => { editItem(text, record) } } type="default" icon={ <EditOutlined /> } />
+            )
+        }
     ]
 
     const getData = function () {
@@ -68,6 +69,11 @@ export default function Contact() {
         }).finally(() => {
             // dispatch(isLoadingOverlay(false))
         })
+    }
+    const editItem = function (text, record) {
+        console.log('Text:', text)
+        console.log('Record:', record)
+            history.push(`/celebrity/edit?id=${text.id}`)
     }
     React.useEffect(() => {
         getData()

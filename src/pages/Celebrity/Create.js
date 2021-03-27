@@ -3,7 +3,7 @@ import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
 import PhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { DollarCircleOutlined, CheckCircleOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
-import {Button, Card, Form, Input, Row, Col, message, Upload, Progress, notification} from "antd";
+import {Button, Card, Form, Input, Row, Col, message, Upload, Progress, notification, Skeleton} from "antd";
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from "react-i18next"
 import './style.less'
@@ -11,22 +11,13 @@ import './style.less'
 import axios_init from "@/utils/axios_init";
 import axios from "axios";
 // import { useDispatch } from 'react-redux'
+const { TextArea } = Input
 
-const routes = [
-    {
-        name: 'celebrity',
-        route: '/celebrity',
-        link: true
-    },
-    {
-        name: 'celebrity.create',
-        route: '/celebrity/create',
-        link: false
-    }
-]
-
-export default function CelebrityCreate() {
+export default function CelebrityCreate(props) {
     // const history = useHistory()
+    const queryString = require('query-string')
+    // const location = useLocation()
+    const [initialValue, setInitialValue]  = React.useState(null)
     const [phone, setPhone]  = React.useState(null)
     const [image, setImage]  = React.useState(null)
     const [video, setVideo]  = React.useState(null)
@@ -38,6 +29,35 @@ export default function CelebrityCreate() {
     const [video_progress, set_video_progress] = React.useState(0)
     const history = useHistory()
     const { t } = useTranslation()
+    const updateId = queryString.parse(props.location.search).id
+    const routes = [
+        {
+            name: 'celebrity',
+            route: '/celebrity',
+            link: true
+        },
+        {
+            name: 'celebrity.create',
+            route: '/celebrity/create',
+            link: false
+        }
+    ]
+    React.useEffect(() => {
+        if (updateId) {
+            axios_init.get(`/celebrity/${updateId}`).then(res => {
+                console.log(res)
+                let _res = { ...res }
+                delete _res.phone_number
+                _res.phone_number = '+' + res.country_code + res.phone_number
+                setInitialValue(_res)
+                setPhone('+' + res.country_code + res.phone_number)
+                setimageUrl(res.profile_photo_url)
+                setVideoUrl(res.demo_video_url)
+                setImage(res.profile_photo)
+                setVideo(res.demo_video)
+            })
+        } else setInitialValue({ first_name: '' })
+    }, [])
     const uploadButton = function (type) {
         if (type === 'image') {
             return (
@@ -56,8 +76,10 @@ export default function CelebrityCreate() {
         } else if (type === 'success') {
             return (
                 <div>
-                    <CheckCircleOutlined style={{ fontSize: '50px', color: '#14c909' }}/>
-                    <div style={{ marginTop: 8 }}>{ t('video.upload.successfully') }</div>
+                    <video width="100%" height="190" controls>
+                        <source src={videoUrl} type="video/mp4"/>
+                        Your browser does not support HTML video.
+                    </video>
                 </div>
             )
         }
@@ -67,7 +89,6 @@ export default function CelebrityCreate() {
         reader.addEventListener('load', () => callback(reader.result));
         reader.readAsDataURL(img);
     }
-
     function beforeUpload(file) {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -123,7 +144,7 @@ export default function CelebrityCreate() {
             }
         }).then(res => {
             setVideo(res.data.filename)
-            setVideoUrl(true)
+            setVideoUrl(res.data.url)
         }).finally(() => {
             setVideoLoading(false)
         }).catch(err => {
@@ -144,202 +165,196 @@ export default function CelebrityCreate() {
         delete _data.image_url
         delete _data.video_url
         console.log(_data)
-        if (_data.demo_video && _data.profile_photo) {
+        if (updateId) {
+            axios_init.put(`/celebrity/${updateId}`, _data).then(response => {
+                notification.success('You request received')
+                history.push('/celebrity')
+            })
+        } else {
             axios_init.post('/celebrity', _data).then(res => {
                 notification.success('You request received')
                 history.push('/celebrity')
             })
         }
+
     }
     return (
         <div>
             <BreadCrumbTemplete routes={routes}/>
-            <Card title={t('celebrity.create')}>
-                <Form
-                    name='normal_login'
-                    layout="vertical"
-                    className='login-form'
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                >
-                    <Row>
-                        <Col span={12}>
-                            <Form.Item
-                                style={{ margin: '10px 10px' }}
-                                name='first_name'
-                                label={ t('first.name') }
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Input
-                                    size="medium"
-                                    placeholder={ t('first.name') }
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='last_name'
-                                label={ t('last.name') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message:  t('required.field') }]}
-                            >
-                                <Input
-                                    size="medium"
-                                    placeholder={ t('last.name') }
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                style={{ margin: '10px 10px' }}
-                                name='phone_number'
-                                label={ t('phone.number') }
-                                hasFeedback={phone && isValidPhoneNumber(phone) ? true : false}
-                                validateStatus="success"
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <PhoneInput
-                                    className="ant-input"
-                                    placeholder={ t('phone.number') }
-                                    defaultCountry="UZ"
-                                    international
-                                    value={phone}
-                                    onChange={setPhone}
-                                    error={'Phone number required'}/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='email'
-                                label={ t('email') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('required.field') }, { type: 'email', message: 'Syntax Error Email' }]}
-                            >
-                                <Input size="medium" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                style={{ margin: '10px 10px' }}
-                                name='username'
-                                label={ t('username') }
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Input size="medium"/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='password'
-                                label={ t('password') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Input.Password type='password' size="medium" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='service_fee'
-                                label={ t('price') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Input type='number' size="medium" prefix={<DollarCircleOutlined className='site-form-item-icon' />} />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='bio'
-                                label={ t('bio') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Input size="medium" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='image_url'
-                                label={ t('image.upload') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Upload
-                                    listType="picture-card"
-                                    className="avatar-uploader customUploader"
-                                    showUploadList={false}
-                                    customRequest={uploadImage}
-                                    beforeUpload={beforeUpload}
+            { (initialValue) ?
+                <Card title={t('celebrity.create')}>
+                    <Form
+                        name='normal_login'
+                        layout="vertical"
+                        className='login-form'
+                        initialValues={initialValue}
+                        onFinish={onFinish}
+                    >
+                        <Row>
+                            <Col span={12}>
+                                <Form.Item
+                                    style={{ margin: '10px 10px' }}
+                                    name='first_name'
+                                    label={ t('first.name') }
+                                    rules={[{ required: true, message: t('required.field') }]}
                                 >
-                                    {
-                                        loading ? (
-                                            <Progress
-                                                strokeColor={{
-                                                    from: '#108ee9',
-                                                    to: '#87d068',
-                                                }}
-                                                percent={progress}
-                                                status="active"
-                                            />
-                                        ) : (imageUrl ? <img src={imageUrl} alt="avatar" className="upload_image" style={{ width: '100%' }} /> : uploadButton('image'))
-                                    }
-                                </Upload>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name='video_url'
-                                label={ t('video.upload') }
-                                style={{ margin: '10px 10px' }}
-                                rules={[{ required: true, message: t('required.field') }]}
-                            >
-                                <Upload
-                                    listType="picture-card"
-                                    className="avatar-uploader customUploader"
-                                    showUploadList={false}
-                                    customRequest={uploadVideo}
-                                    beforeUpload={beforeUploadVideo}
+                                    <Input
+                                        size="medium"
+                                        placeholder={ t('first.name') }
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name='last_name'
+                                    label={ t('last.name') }
+                                    style={{ margin: '10px 10px' }}
+                                    rules={[{ required: true, message:  t('required.field') }]}
                                 >
-                                    {
-                                        video_loading ? (
-                                            <Progress
-                                                strokeColor={{
-                                                    from: '#108ee9',
-                                                    to: '#87d068',
-                                                }}
-                                                percent={video_progress}
-                                                status="active"
-                                            />
-                                        ) : (videoUrl ? uploadButton('success') : uploadButton('video'))
-                                    }
-                                </Upload>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Form.Item>
-                        <div style={{ marginLeft: '10px', marginRight: '10px', position: 'absolute', right: '0' }}>
-                            <Button
-                                type='default'
-                                className='login-form-button'
-                                size='large'
-                                onClick={() => { history.push('/celebrity') }}
-                            >
-                                { t('cancel') }
-                            </Button>
-                            <Button
-                                style={{ marginLeft: '10px'}}
-                                type='primary'
-                                htmlType='submit'
-                                className='login-form-button'
-                                size='large'
-                            >
-                                { t('save') }
-                            </Button>
-                        </div>
-                    </Form.Item>
-                </Form>
-            </Card>
+                                    <Input
+                                        size="medium"
+                                        placeholder={ t('last.name') }
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    style={{ margin: '10px 10px' }}
+                                    name='phone_number'
+                                    label={ t('phone.number') }
+                                    hasFeedback={phone && isValidPhoneNumber(phone) ? true : false}
+                                    validateStatus="success"
+                                    rules={[{ required: true, message: t('required.field') }]}
+                                >
+                                    <PhoneInput
+                                        className="ant-input"
+                                        placeholder={ t('phone.number') }
+                                        defaultCountry="UZ"
+                                        international
+                                        value={phone}
+                                        onChange={setPhone}
+                                        error={'Phone number required'}/>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name='email'
+                                    label={ t('email') }
+                                    style={{ margin: '10px 10px' }}
+                                    rules={[{ required: false, message: t('required.field') }, { type: 'email', message: 'Syntax Error Email' }]}
+                                >
+                                    <Input size="medium" />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name='service_fee'
+                                    label={ t('price') }
+                                    style={{ margin: '10px 10px' }}
+                                    rules={[{ required: true, message: t('required.field') }]}
+                                >
+                                    <Input type='number' size="medium" prefix={<DollarCircleOutlined className='site-form-item-icon' />} />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name='bio'
+                                    label={ t('bio') }
+                                    style={{ margin: '10px 10px' }}
+                                    rules={[{ required: true, message: t('required.field') }]}
+                                >
+                                    <TextArea size="medium" />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name='image_url'
+                                    label={ t('image.upload') }
+                                    style={{ margin: '10px 10px' }}
+                                    rules={[{ required: false, message: t('required.field') }]}
+                                >
+                                    <Upload
+                                        accept="image/*"
+                                        listType="picture-card"
+                                        className="avatar-uploader customUploader"
+                                        showUploadList={false}
+                                        customRequest={uploadImage}
+                                        beforeUpload={beforeUpload}
+                                    >
+                                        {
+                                            loading ? (
+                                                <Progress
+                                                    strokeColor={{
+                                                        from: '#108ee9',
+                                                        to: '#87d068',
+                                                    }}
+                                                    percent={progress}
+                                                    status="active"
+                                                />
+                                            ) : (imageUrl ? <img src={imageUrl} alt="avatar" className="upload_image" style={{ width: '100%' }} /> : uploadButton('image'))
+                                        }
+                                    </Upload>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name='video_url'
+                                    label={ t('video.upload') }
+                                    style={{ margin: '10px 10px' }}
+                                    rules={[{ required: false, message: t('required.field') }]}
+                                >
+                                    <Upload
+                                        accept="video/*"
+                                        listType="picture-card"
+                                        className="avatar-uploader customUploader"
+                                        showUploadList={false}
+                                        customRequest={uploadVideo}
+                                        beforeUpload={beforeUploadVideo}
+                                    >
+                                        {
+                                            video_loading ? (
+                                                <Progress
+                                                    strokeColor={{
+                                                        from: '#108ee9',
+                                                        to: '#87d068',
+                                                    }}
+                                                    percent={video_progress}
+                                                    status="active"
+                                                />
+                                            ) : (videoUrl ? uploadButton('success') : uploadButton('video'))
+                                        }
+                                    </Upload>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Form.Item>
+                            <div style={{ marginLeft: '10px', marginRight: '10px', position: 'absolute', right: '0' }}>
+                                <Button
+                                    type='default'
+                                    className='login-form-button'
+                                    size='large'
+                                    onClick={() => { history.push('/celebrity') }}
+                                >
+                                    { t('cancel') }
+                                </Button>
+                                <Button
+                                    style={{ marginLeft: '10px'}}
+                                    type='primary'
+                                    htmlType='submit'
+                                    className='login-form-button'
+                                    size='large'
+                                >
+                                    { updateId ? t('edit') : t('save') }
+                                </Button>
+                            </div>
+                        </Form.Item>
+                    </Form>
+                </Card> :
+            <Card>
+                <Skeleton active />
+                <Skeleton active />
+                <Skeleton active />
+            </Card> }
         </div>
     )
 }

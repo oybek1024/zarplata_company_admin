@@ -85,10 +85,10 @@ const init = {
         return this.request('POST', url, params, data, hooks)
     },
     put (url, data, params, hooks) {
-        this.request('PUT', url, params, data, hooks)
+        return this.request('PUT', url, params, data, hooks)
     },
     remove (url, data, params, hooks) {
-        this.request('DELETE', url, params, undefined, hooks)
+        return this.request('DELETE', url, params, undefined, hooks)
     },
 }
 
