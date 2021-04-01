@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BreadCrumbTemplete from '../../components/breadcrumb/BreadCrumbTemplete'
 import { Button, Card, Table } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
@@ -7,12 +7,14 @@ import { isLoadingOverlay } from '@/redux/actions'
 import axios_init from '@/utils/axios_init'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 export default function Contact() {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const history = useHistory()
-  const [items, setItems] = React.useState([])
+  const [items, setItems] = useState([])
+  const [itemUser, setItemUser] = useState([])
   const routes = [
     {
       name: t('celebrity'),
@@ -67,7 +69,7 @@ export default function Contact() {
           />
           <Button
             onClick={() => {
-              deleteData(`${text.id}`)
+              handleDelete(text.id)
             }}
             type='default'
             icon={<DeleteOutlined />}
@@ -77,9 +79,6 @@ export default function Contact() {
       ),
     },
   ]
-  const deleteData = function () {
-    axios_init.remove('/celebrity/text.id')
-  }
   const getData = function () {
     // dispatch(isLoadingOverlay(true))
     axios_init
@@ -92,7 +91,18 @@ export default function Contact() {
         // dispatch(isLoadingOverlay(false))
       })
   }
-  const calBill = function () {}
+
+  const handleDelete = (id) => {
+    axios_init
+      .remove(`/celebrity/${id}`)
+      .then((res) => {
+        getData()
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   const editItem = function (text, record) {
     console.log('Text:', text)
     console.log('Record:', record)
