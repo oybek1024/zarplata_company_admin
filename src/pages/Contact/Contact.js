@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
+import ContentMain from "../content/ContentMain";
 
 export default function Contact() {
   const params = useParams()
@@ -21,7 +21,7 @@ export default function Contact() {
 
   return (
       <div>
-        <BreadCrumbTemplete routes={routes}/>
+        <ContentMain routes={routes}/>
       </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete"
+import ContentMain from "../content/ContentMain"
 import './style.css'
 import { Card, Tabs, Button } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
@@ -35,7 +35,7 @@ export default function Home() {
     ]
     return (
         <div>
-          <BreadCrumbTemplete routes={routes}/>
+          <ContentMain routes={routes}/>
           <div className="home">
                   <Tabs defaultActiveKey="1">
                       <TabPane tab="Home" key="1"/>

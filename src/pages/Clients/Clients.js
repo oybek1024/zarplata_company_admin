@@ -1,5 +1,5 @@
 import React from 'react'
-import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
+import ContentMain from "../content/ContentMain";
 import {Table, Space, Tag, Card, Button} from 'antd'
 import { PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -73,7 +73,7 @@ export default function Contact() {
     }
     return (
         <div>
-            <BreadCrumbTemplete routes={routes}/>
+            <ContentMain routes={routes}/>
             <Card title={t('clients')}>
                 <Table columns={columns} dataSource={items} rowKey={ (record) => record.id } scroll={{ x: 100 }}/>
             </Card>

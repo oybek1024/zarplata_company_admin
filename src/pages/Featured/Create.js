@@ -1,5 +1,5 @@
 import React from 'react'
-import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
+import ContentMain from "../content/ContentMain";
 import 'react-phone-number-input/style.css'
 import { PictureOutlined } from '@ant-design/icons'
 import {Button, Card, Form, Input, Row, Col, message, Upload, Progress, notification, Tabs} from "antd";
@@ -110,7 +110,7 @@ export default function CelebrityCreate() {
     }
     return (
         <div>
-            <BreadCrumbTemplete routes={routes}/>
+            <ContentMain routes={routes}/>
             <Card title={t('create.featured')}>
                 <Form
                     name='normal_login'

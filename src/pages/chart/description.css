@@ -1,0 +1,57 @@
+.description .ant-card-head-title {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 18px;
+}
+
+.description {
+    height: 100% !important;
+}
+
+.description .ant-card {
+    height: 100% !important;
+}
+
+.description .ant-card-head {
+    border: none !important;
+}
+
+.description .ant-card-body {
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+h4 {
+    margin: 0 !important;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.title p {
+    margin-right: 24px;
+    margin-bottom: 0 !important;
+}
+
+.title .true-title {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    color: #00B13E;
+}
+
+.title .false-title {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    color: #F21404;
+}

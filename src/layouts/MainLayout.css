@@ -1,0 +1,21 @@
+.ant-layout-header {
+    padding: 0 42px !important;
+    background: #000000 !important;
+}
+
+.ant-layout-sider {
+    background-color: white !important;
+}
+
+.ant-menu {
+    background-color: white !important;
+}
+
+.ant-menu-item-selected {
+    color: white !important;
+    background-color: #1890FF !important;
+}
+
+.ant-menu-item-selected::after {
+     transform: scaleY(0) !important;
+}

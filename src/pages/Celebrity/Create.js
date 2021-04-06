@@ -1,5 +1,5 @@
 import React from 'react'
-import BreadCrumbTemplete from '../../components/breadcrumb/BreadCrumbTemplete'
+import ContentMain from '../content/ContentMain'
 import PhoneInput, {
   formatPhoneNumberIntl,
   isValidPhoneNumber,
@@ -247,7 +247,7 @@ export default function CelebrityCreate(props) {
   }
   return (
     <div>
-      <BreadCrumbTemplete routes={routes} />
+      <ContentMain routes={routes} />
       {initialValue ? (
         <Card title={t('celebrity.create')}>
           <Form

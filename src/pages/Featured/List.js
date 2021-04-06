@@ -1,5 +1,5 @@
 import React from 'react'
-import BreadCrumbTemplete from "../../components/breadcrumb/BreadCrumbTemplete";
+import ContentMain from "../content/ContentMain";
 import {Button, Card, Table, Tag, Modal, Select, message } from "antd";
 import {PlusOutlined, PullRequestOutlined} from "@ant-design/icons";
 import { useHistory } from 'react-router-dom'
@@ -178,7 +178,7 @@ export default function Contact() {
 
     return (
         <div>
-            <BreadCrumbTemplete routes={routes}/>
+            <ContentMain routes={routes}/>
             <Card title={t('featured')} extra={<ExtraButton/>}>
                 <CelebrityAssign />
                 <Table columns={columns} dataSource={items} rowKey={ (record) => record.id } scroll={{ x: 100 }}/>

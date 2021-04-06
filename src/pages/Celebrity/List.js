@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BreadCrumbTemplete from '../../components/breadcrumb/BreadCrumbTemplete'
+import ContentMain from '../content/ContentMain'
 import { Button, Card, Table } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
@@ -128,7 +128,7 @@ export default function Contact() {
 
   return (
     <div>
-      <BreadCrumbTemplete routes={routes} />
+      <ContentMain routes={routes} />
       <Card title={t('celebrity')} extra={<ExtraButton />}>
         <Table
           columns={columns}

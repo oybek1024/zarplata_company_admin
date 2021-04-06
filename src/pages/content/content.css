@@ -1,0 +1,47 @@
+.ant-row {
+    margin: 32px 24px;
+}
+
+.ant-col-11 {
+    margin-bottom: 24px;
+    padding-right: 20px;
+}
+
+
+.ant-col-6 {
+    margin-bottom: 24px;
+    padding-left: 12px;
+}
+
+.ant-col-7 {
+    margin-bottom: 24px;
+    padding-left: 12px;
+}
+
+.ant-col-18 {
+    margin-bottom: 24px;
+}
+
+.ant-btn-primary span {
+    font-size: 17px !important;
+    line-height: 20px !important;
+}
+
+.ant-dropdown-trigger {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 17px !important;
+    line-height: 20px !important;
+}
+
+.drop-down-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drop-down-title p {
+    color: #000000;
+    margin-bottom: 0 !important;
+}
