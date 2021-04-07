@@ -47,25 +47,9 @@ export default function MainLayout({children}) {
                         collapsed={collapsed}
                         onCollapse={() => setCollapsed(!collapsed)}
                     >
-                        <div
-                            style={{
-                                display: 'flex',
-                                height: '90vh',
-                                flexDirection:'column',
-                                justifyContent:'space-between'
-                            }}
-                        >
-                            <MainMenu/>
-                            <Button block style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginTop: '50px !important',
-                            }} onClick={toggleCollapsed} >
-                                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-                            </Button>
-                        </div>
+                        <MainMenu/>
                     </Sider>
-                    <Content style={{ margin: '0 16px' }} className="mainBox">{children}</Content>
+                    <Content style={{margin: '0 16px'}} className="mainBox">{children}</Content>
                 </Layout>
             </Layout>
         </div>

@@ -20,7 +20,7 @@ const data = {
     ],
     datasets: [
         {
-            label: '# of Votes',
+            label: 'Высоко',
             data: [60, 70, 60, 65, 75, 65, 68, 70, 75, 70, 65, 60],
             fill: 1,
             borderColor: '#0028FB',
@@ -30,7 +30,7 @@ const data = {
             pointBorderWidth: 0,
         },
         {
-            label: '# of Votes',
+            label: 'Средний',
             data: [40, 40, 30, 50, 35, 30, 50, 45, 33, 42, 48, 10],
             fill: false,
             borderColor: '#1AB2EF',
@@ -40,7 +40,7 @@ const data = {
             pointBorderWidth: 0,
         },
         {
-            label: '# of Votes',
+            label: 'Моя компания',
             data: [30, 19, 15, 25, 50, 23, 45, 19, 15, 25, 15, 23],
             fill: false,
             borderColor: '#F21404',
@@ -50,7 +50,7 @@ const data = {
             pointBorderWidth: 0,
         },
         {
-            label: '#1 of Votes',
+            label: 'Низкий',
             data: [9, 10, 7, 10, 5, 6, 9, 10, 7, 10, 5, 6],
             fill: 1,
             borderColor: '#148EFF',
@@ -63,21 +63,7 @@ const data = {
 }
 
 const options = {
-    legendCallback: function(chart) {
-        console.log(chart.data);
-        var text = [];
-        text.push('<ul>');
-        for (var i=0; i<chart.data.datasets[0].data.length; i++) {
-            text.push('<li>');
-            text.push('<span style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '">' + chart.data.datasets[0].data[i] + '</span>');
-            if (chart.data.labels[i]) {
-                text.push(chart.data.labels[i]);
-            }
-            text.push('</li>');
-        }
-        text.push('</ul>');
-        return text.join("");
-    },
+
     scales: {
         yAxes: [
             {

@@ -1,6 +1,6 @@
 import React from "react";
 import './content.css'
-import {Button, Col, Dropdown, Row, Menu} from "antd";
+import {Button, Col, Dropdown, Row, Menu, DatePicker} from "antd";
 import {DownOutlined} from '@ant-design/icons'
 import VerticalBar from "@/pages/chart/Chart";
 import Description from "@/pages/chart/Description";
@@ -50,14 +50,7 @@ const ContentMain = function () {
                     </Dropdown>
                 </Col>
                 <Col span={7}>
-                    <Dropdown overlay={menu}>
-                        <Button
-                            block
-                        >
-                            Выберите дата
-                            <DownOutlined/>
-                        </Button>
-                    </Dropdown>
+                    <DatePicker style={{display: 'block'}}/>
                 </Col>
                 <Col span={6}>
                     <Button block type={"primary"}>
