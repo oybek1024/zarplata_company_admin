@@ -64,6 +64,11 @@ const data = {
 
 const options = {
 
+    tooltips: {
+        intersect: false,
+        mode: 'index',
+    },
+
     scales: {
         yAxes: [
             {
@@ -87,9 +92,6 @@ const options = {
         ]
     },
 }
-
-
-
 
 
 const MultiAxisLine = () => (
