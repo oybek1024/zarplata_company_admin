@@ -1,10 +1,12 @@
 .ant-layout-header {
     padding: 0 42px !important;
     background: #000000 !important;
+    display: none;
 }
 
 .ant-layout-sider {
     background-color: white !important;
+    display: none;
 }
 
 .ant-menu {
